@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.detailarticle.ArticleDetailActivity">
+
+
+    <ImageView
+        android:id="@+id/article_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_article_image"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerCrop"
+        android:transitionName="article_image"
+        tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:id="@+id/meta_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#333"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/article_title"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:lineSpacingMultiplier="0.9"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:transitionName="article_title"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/article_byline"
+            style="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8fff" />
+    </LinearLayout>
+
+
+</LinearLayout>

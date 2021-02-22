@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "330931207188",
+    "project_id": "akhbar-fab92",
+    "storage_bucket": "akhbar-fab92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330931207188:android:eb9cce387bcb182cc47b01",
+        "android_client_info": {
+          "package_name": "com.uds.akhbar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330931207188-rl4apo1kuap0lf5enqa31emsu1se8nf4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uds.akhbar",
+            "certificate_hash": "7c71be76b8fba1f515bc6b7a5d9ebbfebe0cc874"
+          }
+        },
+        {
+          "client_id": "330931207188-l86msk8td5b8eo3ltjefk93pod6fkiql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0MzONWaw4yCtBaYxhK1gjaGTeFRvlufk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330931207188-l86msk8td5b8eo3ltjefk93pod6fkiql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

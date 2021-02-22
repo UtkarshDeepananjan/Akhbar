@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Akhbar</string>
+
+    <string name="facebook_application_id" translatable="false">166385061760243</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb166385061760243</string>
+
+    <string name="title_activity_home_screen">MainActivity</string>
+    <string name="title_search">Search</string>
+    <string name="title_top_headline">Top Headline</string>
+    <string name="title_saved_articles">Saved Articles</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="logout_title">Logout</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="share_title">Share App</string>
+    <string name="preference_country_key">country_code</string>
+    <string name="dark_mode_key">dark_mode</string>
+
+    <string-array name="category">
+        <item>general</item>
+        <item>business</item>
+        <item>entertainment</item>
+        <item>health</item>
+        <item>science</item>
+        <item>sports</item>
+        <item>technology</item>
+    </string-array>
+    <string name="content_description_article_image">Article Image</string>
+</resources>
