@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.uds.akhbar.model.Articles;
-import com.uds.akhbar.network.ApiClient;
+import com.uds.akhbar.repository.Repository;
 
 import java.util.List;
 
 public class TopHeadlineViewModel extends ViewModel {
 
-    private LiveData<List<Articles>> mArticles;
+    private final LiveData<List<Articles>> mArticles;
 
 
-    public TopHeadlineViewModel(String countryCode,String category) {
-        mArticles = ApiClient.getInstance().getTopHeadlines(countryCode,category);
+    public TopHeadlineViewModel(String countryCode, String category) {
+        mArticles = Repository.getInstance().getTopHeadlines(countryCode, category);
     }
 
     public LiveData<List<Articles>> getArticlesList() {

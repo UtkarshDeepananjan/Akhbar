@@ -38,4 +38,8 @@
         <item>technology</item>
     </string-array>
     <string name="content_description_article_image">Article Image</string>
+    <string name="share_key">share_key</string>
+    <string name="logout_key">logout_key</string>
+    <string name="share_app_title">Share App…</string>
+    <string name="news_sources_key">news_sources</string>
 </resources>

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.uds.akhbar.model.Articles;
-import com.uds.akhbar.network.ApiClient;
+import com.uds.akhbar.repository.Repository;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ public class SearchViewModel extends ViewModel {
     }
 
     public LiveData<List<Articles>> getArticles(String search) {
-        return ApiClient.getInstance().getSearchResults(search);
+        return Repository.getInstance().getSearchResults(search);
     }
 }

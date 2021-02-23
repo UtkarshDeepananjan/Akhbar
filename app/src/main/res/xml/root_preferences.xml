@@ -2,22 +2,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
-
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/dark_mode_key"
-        app:icon="@drawable/ic_baseline_dark_mode_24"
-        android:title="Dark Mode" />
+        android:title="Dark Mode"
+        app:icon="@drawable/ic_baseline_dark_mode_24" />
     <Preference
-        app:key="share"
         app:icon="@drawable/ic_baseline_share_24"
+        app:key="@string/share_key"
         app:title="@string/share_title" />
 
     <Preference
-        app:key="logout"
         app:icon="@drawable/ic_baseline_logout_24"
+        app:key="@string/logout_key"
         app:title="@string/logout_title" />
+    <ListPreference
+        android:key="news_sources"
+        android:title="Sources" />
 
 
 </PreferenceScreen>

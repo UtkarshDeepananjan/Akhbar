@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,8 +82,7 @@ public class NewsFragment extends Fragment implements ItemClickListener {
     public void onClick(int position, ImageView imageView, TextView titleTextView) {
         Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
         intent.putExtra(ArticleDetailActivity.ARTICLE_DETAIL, articlesList.get(position));
-        ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(getActivity(),
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                         Pair.create(imageView, "article_image"),
                         Pair.create(titleTextView, "article_title"));
         startActivity(intent, options.toBundle());

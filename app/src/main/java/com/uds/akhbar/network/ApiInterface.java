@@ -2,6 +2,7 @@ package com.uds.akhbar.network;
 
 import com.uds.akhbar.BuildConfig;
 import com.uds.akhbar.model.NewsResponse;
+import com.uds.akhbar.model.SourceResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -17,6 +18,10 @@ public interface ApiInterface {
     @Headers({"X-Api-Key:" + BuildConfig.ApiKey})
     @GET("everything")
     Call<NewsResponse> getSearchResults(@Query("q") String query);
+
+    @Headers({"X-Api-Key:" + BuildConfig.ApiKey})
+    @GET("sources")
+    Call<SourceResponse> getSourcesResults();
 
 
 }

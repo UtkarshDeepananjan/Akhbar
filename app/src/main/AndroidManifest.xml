@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Akhbar">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_settings" />
         <activity
             android:name=".HomeScreenActivity"
