@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 public class FirebaseHelper {
-    public static FirebaseHelper newInstance() {
+    public static FirebaseHelper getInstance() {
 
         return new FirebaseHelper();
     }

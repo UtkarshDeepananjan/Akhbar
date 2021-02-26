@@ -48,4 +48,12 @@ public class Source implements Parcelable {
         dest.writeString(name);
         dest.writeString(id);
     }
+
+    public Source(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public Source() {
+    }
 }

@@ -1,19 +1,22 @@
 package com.uds.akhbar.ui.savedarticle;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.uds.akhbar.model.Articles;
+import com.uds.akhbar.repository.Repository;
+
+import java.util.List;
 
 public class SavedArticleViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final LiveData<List<Articles>> mArticles;
 
     public SavedArticleViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mArticles = Repository.getInstance().getSavedArticles();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Articles>> getArticles() {
+        return mArticles;
     }
 }

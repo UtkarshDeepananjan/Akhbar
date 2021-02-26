@@ -42,4 +42,11 @@
     <string name="logout_key">logout_key</string>
     <string name="share_app_title">Share App…</string>
     <string name="news_sources_key">news_sources</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="image_desc">Article Image</string>
+    <string name="image_btn_desc_next">Next Button</string>
+    <string name="image_btn_desc_prev">Previous Button</string>
+    <string name="save_label">Save</string>
+    <string name="share_label">Share</string>
 </resources>

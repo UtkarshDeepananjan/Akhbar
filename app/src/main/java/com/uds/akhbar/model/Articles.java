@@ -9,8 +9,9 @@ import java.sql.Timestamp;
 
 public class Articles implements Parcelable {
 
+    private String id;
     @SerializedName("publishedAt")
-    private Timestamp publishedAt;
+    private String publishedAt;
 
     @SerializedName("author")
     private String author;
@@ -33,15 +34,31 @@ public class Articles implements Parcelable {
     @SerializedName("content")
     private String content;
 
+    public Articles(String id, String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
+        this.id = id;
+        this.publishedAt = publishedAt;
+        this.author = author;
+        this.urlToImage = urlToImage;
+        this.description = description;
+        this.source = source;
+        this.title = title;
+        this.url = url;
+        this.content = content;
+    }
+
+    public Articles() {
+    }
+
     protected Articles(Parcel in) {
-        publishedAt = (Timestamp) in.readSerializable();
         author = in.readString();
         urlToImage = in.readString();
         description = in.readString();
+        source = in.readParcelable(Source.class.getClassLoader());
         title = in.readString();
+        id = in.readString();
         url = in.readString();
         content = in.readString();
-        source = in.readParcelable(Source.class.getClassLoader());
+        publishedAt =  in.readString();
     }
 
     public static final Creator<Articles> CREATOR = new Creator<Articles>() {
@@ -56,7 +73,25 @@ public class Articles implements Parcelable {
         }
     };
 
-    public Timestamp getPublishedAt() {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(author);
+        dest.writeString(urlToImage);
+        dest.writeString(description);
+        dest.writeParcelable(source, flags);
+        dest.writeString(title);
+        dest.writeString(url);
+        dest.writeString(id);
+        dest.writeString(content);
+        dest.writeString(publishedAt);
+    }
+
+    public String getPublishedAt() {
         return publishedAt;
     }
 
@@ -88,20 +123,11 @@ public class Articles implements Parcelable {
         return content;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(publishedAt);
-        dest.writeString(author);
-        dest.writeString(urlToImage);
-        dest.writeString(description);
-        dest.writeString(title);
-        dest.writeString(url);
-        dest.writeString(content);
-        dest.writeParcelable(source, flags);
+    public void setId(String id) {
+        this.id = id;
     }
 }
