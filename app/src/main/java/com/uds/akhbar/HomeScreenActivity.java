@@ -31,6 +31,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeScreenActivity extends AppCompatActivity {
+    public static final String ACTION_GET_NEXT = "akhbar_widget_next";
+    public static final String ACTION_GET_PREVIOUS ="akhbar_widget_next" ;
     private static final String TAG = "TAG_HOME";
     FirebaseUser firebaseUser;
     Location location;

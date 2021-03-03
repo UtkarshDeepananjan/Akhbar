@@ -3,7 +3,8 @@
 
     <string name="facebook_application_id" translatable="false">166385061760243</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb166385061760243</string>
-
+    <string name="ad_app_id">ca-app-pub-1175998725156444~3452033341</string>
+    <string name="banner_ad_unit">ca-app-pub-3940256099942544/6300978111</string>
     <string name="title_activity_home_screen">MainActivity</string>
     <string name="title_search">Search</string>
     <string name="title_top_headline">Top Headline</string>
@@ -49,4 +50,5 @@
     <string name="image_btn_desc_prev">Previous Button</string>
     <string name="save_label">Save</string>
     <string name="share_label">Share</string>
+    <string name="view_full_article_label">View Full Article</string>
 </resources>

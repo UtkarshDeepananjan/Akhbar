@@ -1,5 +1,7 @@
 package com.uds.akhbar.ui.detailarticle;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.squareup.picasso.Picasso;
 import com.uds.akhbar.R;
 import com.uds.akhbar.databinding.ActivityArticleDetailBinding;
@@ -29,7 +35,22 @@ public class ArticleDetailActivity extends AppCompatActivity {
         setSupportActionBar(binding.topAppBar);
         articles = getIntent().getParcelableExtra(ARTICLE_DETAIL);
         binding.setArticle(articles);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        binding.adView.loadAd(adRequest);
+
         Picasso.get().load(articles.getUrlToImage()).into(binding.articleImage);
+        binding.viewFullArticle.setOnClickListener(v -> {
+            if (articles.getUrl() != null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(articles.getUrl()));
+                startActivity(intent);
+            }
+        });
 
     }
 

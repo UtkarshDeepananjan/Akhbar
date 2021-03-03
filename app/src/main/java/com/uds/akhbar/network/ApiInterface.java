@@ -4,9 +4,11 @@ import com.uds.akhbar.BuildConfig;
 import com.uds.akhbar.model.NewsResponse;
 import com.uds.akhbar.model.SourceResponse;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -22,6 +24,7 @@ public interface ApiInterface {
     @Headers({"X-Api-Key:" + BuildConfig.ApiKey})
     @GET("sources")
     Call<SourceResponse> getSourcesResults();
+
 
 
 }

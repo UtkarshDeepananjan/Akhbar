@@ -34,31 +34,17 @@ public class Articles implements Parcelable {
     @SerializedName("content")
     private String content;
 
-    public Articles(String id, String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
-        this.id = id;
-        this.publishedAt = publishedAt;
-        this.author = author;
-        this.urlToImage = urlToImage;
-        this.description = description;
-        this.source = source;
-        this.title = title;
-        this.url = url;
-        this.content = content;
-    }
-
-    public Articles() {
-    }
 
     protected Articles(Parcel in) {
+        id = in.readString();
+        publishedAt = in.readString();
         author = in.readString();
         urlToImage = in.readString();
         description = in.readString();
         source = in.readParcelable(Source.class.getClassLoader());
         title = in.readString();
-        id = in.readString();
         url = in.readString();
         content = in.readString();
-        publishedAt =  in.readString();
     }
 
     public static final Creator<Articles> CREATOR = new Creator<Articles>() {
@@ -80,15 +66,34 @@ public class Articles implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(publishedAt);
         dest.writeString(author);
         dest.writeString(urlToImage);
         dest.writeString(description);
         dest.writeParcelable(source, flags);
         dest.writeString(title);
         dest.writeString(url);
-        dest.writeString(id);
         dest.writeString(content);
-        dest.writeString(publishedAt);
+    }
+
+    public Articles(String id, String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
+        this.id = id;
+        this.publishedAt = publishedAt;
+        this.author = author;
+        this.urlToImage = urlToImage;
+        this.description = description;
+        this.source = source;
+        this.title = title;
+        this.url = url;
+        this.content = content;
+    }
+
+    public Articles() {
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getPublishedAt() {
@@ -121,13 +126,5 @@ public class Articles implements Parcelable {
 
     public String getContent() {
         return content;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

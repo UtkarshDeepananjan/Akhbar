@@ -101,8 +101,10 @@ public class Repository {
     public String saveArticles(Articles articles) {
         final String[] isSuccess = new String[1];
         mReference.child("Saved Articles").push().setValue(articles)
-                .addOnSuccessListener(aVoid -> isSuccess[0] = "Article Saved")
-                .addOnFailureListener(e -> isSuccess[0] = e.getMessage());
+                .addOnSuccessListener(aVoid ->
+                        isSuccess[0] = "Article Saved")
+                .addOnFailureListener(e ->
+                        isSuccess[0] = e.getMessage());
         return isSuccess[0];
     }
 
