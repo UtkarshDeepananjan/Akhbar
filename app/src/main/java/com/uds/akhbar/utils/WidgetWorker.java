@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -18,11 +17,13 @@ import java.util.Map;
 
 public class WidgetWorker extends Worker {
     private List<Articles> mSavedArticles;
+    private Context context;
 
 
     public WidgetWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         mSavedArticles = new ArrayList<>();
+        this.context=context;
     }
 
     @NonNull
@@ -36,12 +37,10 @@ public class WidgetWorker extends Worker {
 
     public void getSavedArticles() {
         LiveData<List<Articles>> savedArticles = Repository.getInstance().getSavedArticles();
-        savedArticles.observeForever(new Observer<List<Articles>>() {
-           @Override
-           public void onChanged(List<Articles> articles) {
-               mSavedArticles=articles;
-           }
-       });
+        savedArticles.observeForever(articles ->
+        {
+            mSavedArticles=articles;
+        });
 
     }
 }
