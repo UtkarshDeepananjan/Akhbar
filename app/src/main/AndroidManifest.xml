@@ -37,13 +37,15 @@
             android:label="@string/title_settings" />
         <activity
             android:name=".HomeScreenActivity"
-            android:label="@string/title_activity_home_screen" />
-        <activity android:name=".LoginActivity">
+            android:label="@string/title_activity_home_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity">
+
         </activity>
         <activity android:name=".ui.detailarticle.ArticleDetailActivity" />
 

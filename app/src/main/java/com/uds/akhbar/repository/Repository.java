@@ -30,7 +30,7 @@ public class Repository {
 
     public Repository() {
         apiInterface = ApiClient.getApiService();
-        mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());
+      /*  mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());*/
 
     }
 

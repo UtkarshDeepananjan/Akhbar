@@ -57,7 +57,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         TextView titleText = findViewById(R.id.title_textView);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> titleText.setText(destination.getLabel()));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
-        Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePicture);
+        /*Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePicture);*/
         profilePicture.setOnClickListener(v -> startActivity(new Intent(HomeScreenActivity.this, SettingsActivity.class)));
 
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);

@@ -34,21 +34,21 @@ public class SavedArticleFragment extends Fragment implements ItemClickListener 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        savedArticleViewModel =
-                new ViewModelProvider(this).get(SavedArticleViewModel.class);
+    /*    savedArticleViewModel =
+                new ViewModelProvider(this).get(SavedArticleViewModel.class);*/
         View root = inflater.inflate(R.layout.fragment_saved_articles, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         articlesList=new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsAdapter adapter = new NewsAdapter(getActivity(), this, new ArrayList<>(), 1);
         recyclerView.setAdapter(adapter);
-        savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<Articles>>() {
+      /*  savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<Articles>>() {
             @Override
             public void onChanged(List<Articles> articles) {
                 articlesList=articles;
                 adapter.setArticlesList(articles);
             }
-        });
+        });*/
         return root;
     }
 

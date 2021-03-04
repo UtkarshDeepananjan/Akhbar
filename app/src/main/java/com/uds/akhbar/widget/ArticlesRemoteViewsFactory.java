@@ -1,11 +1,13 @@
 package com.uds.akhbar.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
+import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,11 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
 
             }
         });
+        Toast.makeText(context, articles.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, ArticleDetailActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ArticleDetailActivity.ARTICLE_DETAIL, articles);
+        rv.setOnClickFillInIntent(R.id.article_title, intent);
         return rv;
     }
 
