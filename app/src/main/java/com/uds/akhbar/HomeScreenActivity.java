@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -22,22 +24,26 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
+import com.uds.akhbar.model.Articles;
+import com.uds.akhbar.repository.Repository;
 import com.uds.akhbar.ui.settings.SettingsActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import timber.log.Timber;
 
 public class HomeScreenActivity extends AppCompatActivity {
-    public static final String ACTION_GET_NEXT = "akhbar_widget_next";
-    public static final String ACTION_GET_PREVIOUS ="akhbar_widget_next" ;
-    private static final String TAG = "TAG_HOME";
     FirebaseUser firebaseUser;
     Location location;
     Geocoder geocoder;
     List<Address> addresses;
+    List<Articles> articlesList;
 
 
     @Override
@@ -63,6 +69,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         geocoder = new Geocoder(this);
 
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -94,12 +101,11 @@ public class HomeScreenActivity extends AppCompatActivity {
             return;
         }
         try {
-           if (location!=null)
-           {
-               addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 10);
-               Address address = addresses.get(0);
-               saveCountryCode(address.getCountryCode());
-           }
+            if (location != null) {
+                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 10);
+                Address address = addresses.get(0);
+                saveCountryCode(address.getCountryCode());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,4 +117,5 @@ public class HomeScreenActivity extends AppCompatActivity {
         editor.putString(getString(R.string.preference_country_key), countryCode.toLowerCase());
         editor.apply();
     }
+
 }

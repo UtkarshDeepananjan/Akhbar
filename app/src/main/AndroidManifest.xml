@@ -22,7 +22,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/ad_app_id" />
 
-        <receiver android:name=".NewsAppWidget">
+        <receiver android:name=".widget.NewsAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -46,6 +46,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.detailarticle.ArticleDetailActivity" />
+
+        <service android:name=".widget.ArticlesWidgetService" />
     </application>
 
 </manifest>

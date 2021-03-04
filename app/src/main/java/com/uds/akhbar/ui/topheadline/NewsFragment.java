@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.uds.akhbar.R;
 import com.uds.akhbar.adapters.NewsAdapter;
 import com.uds.akhbar.model.Articles;
@@ -67,8 +68,23 @@ public class NewsFragment extends Fragment implements ItemClickListener {
                 articles -> {
                     this.articlesList = articles;
                     adapter.setArticlesList(articles);
+                    if (category.equals("general")) {
+                        saveArticlesForWidget(getCountryCode());
+                    }
+
                 });
         return root;
+    }
+
+    private void saveArticlesForWidget(String countryCode) {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("top_headlines_widget", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(articlesList);
+        editor.putString("top_headlines_widget", json);
+        editor.apply();
+
     }
 
     private String getCountryCode() {
@@ -83,8 +99,8 @@ public class NewsFragment extends Fragment implements ItemClickListener {
         Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
         intent.putExtra(ArticleDetailActivity.ARTICLE_DETAIL, articlesList.get(position));
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        Pair.create(imageView, "article_image"),
-                        Pair.create(titleTextView, "article_title"));
+                Pair.create(imageView, "article_image"),
+                Pair.create(titleTextView, "article_title"));
         startActivity(intent, options.toBundle());
     }
 }
