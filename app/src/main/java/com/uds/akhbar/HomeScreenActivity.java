@@ -51,7 +51,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> titleText.setText(destination.getLabel()));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
 //        Picasso.get().load(firebaseUser.getPhotoUrl()).into(profilePicture);
-        profilePicture.setOnClickListener(v -> startActivity(new Intent(HomeScreenActivity.this, SettingsActivity.class)));
+//        profilePicture.setOnClickListener(v -> startActivity(new Intent(HomeScreenActivity.this, SettingsActivity.class)));
 
 
     }
@@ -59,7 +59,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getLocationPermission();
+//        getLocationPermission();
     }
 
     @Override

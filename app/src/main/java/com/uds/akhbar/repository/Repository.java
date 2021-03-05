@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.model.NewsResponse;
@@ -31,11 +28,11 @@ import retrofit2.Response;
 public class Repository {
     private final ApiInterface apiInterface;
     private  DatabaseReference mReference;
-    String isSuccess = "";
+    private boolean exists;
 
     public Repository() {
         apiInterface = ApiClient.getApiService();
-//        mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());
+      /*  mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());*/
 
     }
 
@@ -104,23 +101,31 @@ public class Repository {
     }
 
     public String saveArticles(Articles articles) {
+        String key = mReference.push().getKey();
+        articles.setId(key);
+        mReference.child("Saved Articles").child(key).setValue(articles);
+        return key;
+    }
 
-        mReference.child("Saved Articles").push().setValue(articles)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                       isSuccess+="Success";
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                       isSuccess+=e.getLocalizedMessage();
-                    }
-                });
+    public void deleteArticle(String id) {
+        mReference.child("Saved Articles").child(id).removeValue();
+    }
 
+    public boolean checkArticleExists(Articles article) {
+        Query query = mReference.child("Saved Articles").orderByChild("title");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                exists = true;
+            }
 
-        return isSuccess;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                exists = false;
+            }
+        });
+        return exists;
+
     }
 
     public MutableLiveData<List<Articles>> getSavedArticles() {

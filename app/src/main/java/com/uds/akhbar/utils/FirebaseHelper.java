@@ -6,6 +6,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseHelper {
     public static FirebaseHelper getInstance() {
@@ -34,4 +36,6 @@ public class FirebaseHelper {
             return Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
         }
     }
+
+
 }

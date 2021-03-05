@@ -23,32 +23,26 @@ import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 import com.uds.akhbar.utils.ItemClickListener;
 
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavedArticleFragment extends Fragment implements ItemClickListener {
 
-    private SavedArticleViewModel savedArticleViewModel;
     private List<Articles> articlesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        savedArticleViewModel =
-//                new ViewModelProvider(this).get(SavedArticleViewModel.class);
+//        SavedArticleViewModel savedArticleViewModel = new ViewModelProvider(this).get(SavedArticleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_saved_articles, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        articlesList=new ArrayList<>();
+        articlesList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsAdapter adapter = new NewsAdapter(getActivity(), this, new ArrayList<>(), 1);
         recyclerView.setAdapter(adapter);
-//        savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<Articles>>() {
-//            @Override
-//            public void onChanged(List<Articles> articles) {
-//                articlesList=articles;
-//                adapter.setArticlesList(articles);
-//            }
-//        });
+        /*savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), articles -> {
+            articlesList=articles;
+            adapter.setArticlesList(articles);
+        });*/
         return root;
     }
 

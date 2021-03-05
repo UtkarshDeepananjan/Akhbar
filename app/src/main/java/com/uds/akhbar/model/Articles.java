@@ -127,4 +127,8 @@ public class Articles implements Parcelable {
     public String getContent() {
         return content;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

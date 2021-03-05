@@ -1,6 +1,7 @@
 package com.uds.akhbar.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         Articles articles = articlesList.get(position);
         holder.title.setText(articles.getTitle());
         String imageUrl=articles.getUrlToImage();
-        if (imageUrl!=null) {
+        if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.get().load(articles.getUrlToImage())
                     .placeholder(R.drawable.image_loading)
                     .error(R.drawable.ic_baseline_broken_image_24)

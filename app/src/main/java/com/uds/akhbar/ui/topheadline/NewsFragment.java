@@ -62,7 +62,7 @@ public class NewsFragment extends Fragment implements ItemClickListener {
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(getCountryCode(), category);
+        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory("in", category);
         TopHeadlineViewModel topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
         topHeadlineViewModel.getArticlesList().observe(getViewLifecycleOwner(),
                 articles -> {
