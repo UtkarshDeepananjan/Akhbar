@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,11 +30,12 @@ import retrofit2.Response;
 
 public class Repository {
     private final ApiInterface apiInterface;
-    private DatabaseReference mReference;
+    private  DatabaseReference mReference;
+    String isSuccess = "";
 
     public Repository() {
         apiInterface = ApiClient.getApiService();
-      /*  mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());*/
+//        mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());
 
     }
 
@@ -99,13 +104,23 @@ public class Repository {
     }
 
     public String saveArticles(Articles articles) {
-        final String[] isSuccess = new String[1];
+
         mReference.child("Saved Articles").push().setValue(articles)
-                .addOnSuccessListener(aVoid ->
-                        isSuccess[0] = "Article Saved")
-                .addOnFailureListener(e ->
-                        isSuccess[0] = e.getMessage());
-        return isSuccess[0];
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                       isSuccess+="Success";
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                       isSuccess+=e.getLocalizedMessage();
+                    }
+                });
+
+
+        return isSuccess;
     }
 
     public MutableLiveData<List<Articles>> getSavedArticles() {

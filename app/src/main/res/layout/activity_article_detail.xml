@@ -108,8 +108,6 @@
                     android:paddingBottom="8dp"
                     android:text="@{article.description}"
                     android:textSize="18sp"
-
-                    android:transitionName="article_title"
                     tools:targetApi="lollipop" />
 
                 <TextView
@@ -129,8 +127,6 @@
                     android:paddingBottom="8dp"
                     android:text="@{BindingUtils.truncateExtra(article.content)}"
                     android:textSize="18sp"
-
-                    android:transitionName="article_title"
                     tools:targetApi="lollipop" />
             </LinearLayout>
 

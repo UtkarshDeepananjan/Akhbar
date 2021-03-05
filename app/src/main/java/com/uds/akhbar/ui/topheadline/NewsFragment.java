@@ -69,14 +69,14 @@ public class NewsFragment extends Fragment implements ItemClickListener {
                     this.articlesList = articles;
                     adapter.setArticlesList(articles);
                     if (category.equals("general")) {
-                        saveArticlesForWidget(getCountryCode());
+                        saveArticlesForWidget();
                     }
 
                 });
         return root;
     }
 
-    private void saveArticlesForWidget(String countryCode) {
+    private void saveArticlesForWidget() {
         SharedPreferences sharedPref = getContext().getSharedPreferences("top_headlines_widget", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -89,7 +89,7 @@ public class NewsFragment extends Fragment implements ItemClickListener {
 
     private String getCountryCode() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString(getString(R.string.preference_country_key), "");
+        return sharedPref.getString(getString(R.string.preference_country_key), "in");
 
     }
 

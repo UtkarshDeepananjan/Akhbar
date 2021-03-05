@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView titleText = findViewById(R.id.title_textView);
         titleText.setText(getString(R.string.title_settings));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
-      /*  Picasso.get().load(firebaseHelper.getProfilePicture()).into(profilePicture);*/
+//        Picasso.get().load(firebaseHelper.getProfilePicture()).into(profilePicture);
     }
 
 }

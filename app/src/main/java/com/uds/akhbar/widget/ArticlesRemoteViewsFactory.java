@@ -4,19 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,27 +56,19 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
         Articles articles = mArticles.get(position);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.articles_widget_list_item);
         rv.setTextViewText(R.id.article_title, articles.getTitle());
-        Picasso.get().load(articles.getUrlToImage()).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                rv.setImageViewBitmap(R.id.article_image, bitmap);
-            }
+        try {
+            Bitmap bitmap = Picasso.get().load(articles.getUrlToImage()).error(R.drawable.ic_baseline_broken_image_24).get();
+            rv.setImageViewBitmap(R.id.article_image, bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
-        Toast.makeText(context, articles.getTitle(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, ArticleDetailActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Bundle extra=new Bundle();
+        extra.putParcelable(ArticleDetailActivity.ARTICLE_DETAIL,articles);
+        Intent intent = new Intent();
         intent.putExtra(ArticleDetailActivity.ARTICLE_DETAIL, articles);
-        rv.setOnClickFillInIntent(R.id.article_title, intent);
+        intent.putExtras(extra);
+        rv.setOnClickFillInIntent(R.id.root, intent);
         return rv;
     }
 

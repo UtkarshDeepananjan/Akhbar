@@ -37,7 +37,7 @@
             android:label="@string/title_settings" />
         <activity
             android:name=".HomeScreenActivity"
-            android:label="@string/title_activity_home_screen">
+            android:label="@string/title_activity_home_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +49,8 @@
         </activity>
         <activity android:name=".ui.detailarticle.ArticleDetailActivity" />
 
-        <service android:name=".widget.ArticlesWidgetService" />
+        <service android:name=".widget.ArticlesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
