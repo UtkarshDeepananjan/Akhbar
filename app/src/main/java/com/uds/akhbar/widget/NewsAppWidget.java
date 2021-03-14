@@ -26,19 +26,17 @@ public class NewsAppWidget extends AppWidgetProvider {
             PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, detailIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setPendingIntentTemplate(R.id.list_view, appPendingIntent);
             views.setEmptyView(R.id.list_view, R.id.empty_view);
-
+        appWidgetManager.updateAppWidget(appWidgetIds, views);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
     }
 
     @Override
     public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
     }
 
     @Override
     public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 
 

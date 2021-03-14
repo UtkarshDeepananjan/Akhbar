@@ -3,19 +3,18 @@ package com.uds.akhbar.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.preference.PreferenceManager;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.picasso.Picasso;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,12 +55,16 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
         Articles articles = mArticles.get(position);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.articles_widget_list_item);
         rv.setTextViewText(R.id.article_title, articles.getTitle());
-        try {
-            Bitmap bitmap = Picasso.get().load(articles.getUrlToImage()).error(R.drawable.ic_baseline_broken_image_24).get();
+        /*try {
+            Bitmap bitmap = Glide.with(context)
+                    .load(imageUrl)
+                    .centerCrop()
+
+                    .into(holder.imageView);
             rv.setImageViewBitmap(R.id.article_image, bitmap);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Bundle extra=new Bundle();
         extra.putParcelable(ArticleDetailActivity.ARTICLE_DETAIL,articles);
@@ -93,8 +96,8 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
     }
 
     private void getArticlesForWidget() {
-        SharedPreferences sharedPref = context.getSharedPreferences("top_headlines_widget", Context.MODE_PRIVATE);
-        String json = sharedPref.getString("top_headlines_widget", "");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = sharedPref.getString(context.getString(R.string.pref_widget_key), "");
         Gson gson = new Gson();
         mArticles = gson.fromJson(json, new TypeToken<List<Articles>>() {
         }.getType());

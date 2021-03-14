@@ -7,6 +7,15 @@
         android:key="@string/dark_mode_key"
         android:title="Dark Mode"
         app:icon="@drawable/ic_baseline_dark_mode_24" />
+
+    <ListPreference
+        android:entries="@array/country_values"
+        android:title="Country"
+        app:defaultValue="in"
+        android:defaultValue="India"
+        app:entryValues="@array/country_key"
+        app:icon="@drawable/ic_country_24"
+        app:key="@string/preference_country_key" />
     <Preference
         app:icon="@drawable/ic_baseline_share_24"
         app:key="@string/share_key"
@@ -16,9 +25,6 @@
         app:icon="@drawable/ic_baseline_logout_24"
         app:key="@string/logout_key"
         app:title="@string/logout_title" />
-    <ListPreference
-        android:key="news_sources"
-        android:title="Sources" />
 
 
 </PreferenceScreen>

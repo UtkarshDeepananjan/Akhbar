@@ -2,6 +2,7 @@ package com.uds.akhbar.ui.searcharticle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,11 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.uds.akhbar.R;
 import com.uds.akhbar.adapters.NewsAdapter;
-import com.uds.akhbar.databinding.FragmentSearchBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 import com.uds.akhbar.utils.ItemClickListener;
@@ -32,15 +31,13 @@ public class SearchFragment extends Fragment implements ItemClickListener {
 
     private SearchViewModel searchViewModel;
     private NewsAdapter adapter;
-    private FragmentSearchBinding binding;
     private List<Articles> articlesList;
-    private MutableLiveData<String> searchQuery;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
-        adapter = new NewsAdapter(getContext(),this, new ArrayList<>(), 2);
+        com.uds.akhbar.databinding.FragmentSearchBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
+        adapter = new NewsAdapter(getContext(), this, new ArrayList<>(), 2);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
@@ -51,17 +48,17 @@ public class SearchFragment extends Fragment implements ItemClickListener {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchViewModel.getArticles(newText).observe(getViewLifecycleOwner(),
-                        articles -> {
-                            articlesList = articles;
-                            adapter.setArticlesList(articles);
-                        });
+                if (TextUtils.isEmpty(newText))
+                    searchViewModel.getArticles(newText).observe(getViewLifecycleOwner(),
+                            articles -> {
+                                articlesList = articles;
+                                adapter.setArticlesList(articles);
+                            });
                 adapter.notifyDataSetChanged();
                 return false;
             }

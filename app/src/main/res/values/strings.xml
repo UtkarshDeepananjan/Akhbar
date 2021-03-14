@@ -52,4 +52,6 @@
     <string name="share_label">Share</string>
     <string name="view_full_article_label">View Full Article</string>
     <string name="empty_view_text">No Articles Found</string>
+    <string name="preference_file_key">com_uds_akhbar_preference</string>
+    <string name="pref_widget_key">widget:key</string>
 </resources>

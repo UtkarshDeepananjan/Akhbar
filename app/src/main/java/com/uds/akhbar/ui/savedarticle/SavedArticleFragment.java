@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.uds.akhbar.R;
 import com.uds.akhbar.adapters.NewsAdapter;
 import com.uds.akhbar.model.Articles;
@@ -32,17 +32,27 @@ public class SavedArticleFragment extends Fragment implements ItemClickListener 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        SavedArticleViewModel savedArticleViewModel = new ViewModelProvider(this).get(SavedArticleViewModel.class);
+        SavedArticleViewModel savedArticleViewModel = new ViewModelProvider(this).get(SavedArticleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_saved_articles, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        LottieAnimationView animationView = root.findViewById(R.id.animationView);
         articlesList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsAdapter adapter = new NewsAdapter(getActivity(), this, new ArrayList<>(), 1);
         recyclerView.setAdapter(adapter);
-        /*savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), articles -> {
-            articlesList=articles;
+/*
+        savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), articles -> {
+            articlesList = articles;
+            if (articles.isEmpty()) {
+                animationView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                animationView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
             adapter.setArticlesList(articles);
-        });*/
+        });
+*/
         return root;
     }
 

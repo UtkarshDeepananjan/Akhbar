@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.uds.akhbar.R;
 import com.uds.akhbar.utils.FirebaseHelper;
 
@@ -25,10 +25,14 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
+
         TextView titleText = findViewById(R.id.title_textView);
         titleText.setText(getString(R.string.title_settings));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
-//        Picasso.get().load(firebaseHelper.getProfilePicture()).into(profilePicture);
+        Glide.with(getApplicationContext())
+                .load(R.drawable.googleg_disabled_color_18)
+                .into(profilePicture);
+
     }
 
 }

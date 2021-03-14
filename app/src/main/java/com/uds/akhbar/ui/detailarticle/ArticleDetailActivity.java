@@ -6,26 +6,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.repository.Repository;
-import com.uds.akhbar.utils.FirebaseHelper;
 
 public class ArticleDetailActivity extends AppCompatActivity {
     public static final String ARTICLE_DETAIL = "article:detail";
@@ -46,42 +38,15 @@ public class ArticleDetailActivity extends AppCompatActivity {
         });
         binding.adView.loadAd(adRequest);
 
-        Picasso.get().load(articles.getUrlToImage()).into(binding.articleImage);
+        Glide.with(getApplicationContext())
+                .load(articles.getUrlToImage())
+                .into(binding.articleImage);
         binding.viewFullArticle.setOnClickListener(v -> {
-            if (articles.getUrl() != null || !articles.getUrl().equals("")) {
+            if (!TextUtils.isEmpty(articles.getUrl())) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(articles.getUrl()));
                 startActivity(intent);
             }
         });
-
-       /* Query query = FirebaseHelper.getInstance().getDatabaseReference().child("Saved Articles").orderByChild("title").equalTo(articles.getTitle());
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String articles=snapshot.getValue(Articles.class).getTitle();
-                Toast.makeText(ArticleDetailActivity.this,previousChildName, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
 
     }
 

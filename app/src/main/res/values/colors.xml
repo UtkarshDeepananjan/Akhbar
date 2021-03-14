@@ -17,4 +17,5 @@
     <color name="cardBackground">#ddd</color>
     <color name="menuColor">#FF000000</color>
     <color name="appBarColor">#FFFFFF</color>
+    <color name="shimmerPlaceholder">#C6C6C6</color>
 </resources>

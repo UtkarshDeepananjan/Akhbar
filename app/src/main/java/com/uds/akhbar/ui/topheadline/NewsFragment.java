@@ -1,6 +1,5 @@
 package com.uds.akhbar.ui.topheadline;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,29 +9,34 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.uds.akhbar.R;
 import com.uds.akhbar.adapters.NewsAdapter;
+import com.uds.akhbar.databinding.FragmentNewsBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 import com.uds.akhbar.utils.ItemClickListener;
+import com.uds.akhbar.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsFragment extends Fragment implements ItemClickListener {
+public class NewsFragment extends Fragment implements ItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String CATEGORY_PARAMS = "all";
     private String category;
     private NewsAdapter adapter;
-    List<Articles> articlesList;
+    private List<Articles> articlesList;
+    private FragmentNewsBinding binding;
+    private SharedPreferences sharedPreferences;
 
     public NewsFragment() {
     }
@@ -54,42 +58,39 @@ public class NewsFragment extends Fragment implements ItemClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_news, container, false);
+        binding = FragmentNewsBinding.inflate(inflater, container, false);
         adapter = new NewsAdapter(getContext(), this, new ArrayList<>(), 1);
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory("in", category);
-        TopHeadlineViewModel topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
-        topHeadlineViewModel.getArticlesList().observe(getViewLifecycleOwner(),
-                articles -> {
-                    this.articlesList = articles;
-                    adapter.setArticlesList(articles);
-                    if (category.equals("general")) {
-                        saveArticlesForWidget();
-                    }
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerView.setAdapter(adapter);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        getLatestHeadlines(getCountryCode());
 
-                });
-        return root;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            NetworkUtils networkUtils = new NetworkUtils(getContext());
+            networkUtils.observe(getViewLifecycleOwner(), aBoolean -> {
+                if (!aBoolean) {
+                    binding.shimmer.setVisibility(View.GONE);
+                }
+            });
+        }
+
+        return binding.getRoot();
+    }
+
+
+    private String getCountryCode() {
+        return sharedPreferences.getString(getString(R.string.preference_country_key), "in");
     }
 
     private void saveArticlesForWidget() {
-        SharedPreferences sharedPref = getContext().getSharedPreferences("top_headlines_widget", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(articlesList);
-        editor.putString("top_headlines_widget", json);
+        editor.putString(getString(R.string.pref_widget_key), json);
         editor.apply();
-
-    }
-
-    private String getCountryCode() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString(getString(R.string.preference_country_key), "in");
 
     }
 
@@ -102,5 +103,35 @@ public class NewsFragment extends Fragment implements ItemClickListener {
                 Pair.create(imageView, "article_image"),
                 Pair.create(titleTextView, "article_title"));
         startActivity(intent, options.toBundle());
+    }
+
+    private void getLatestHeadlines(String countryCode) {
+        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(countryCode, category);
+        TopHeadlineViewModel topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
+        topHeadlineViewModel.getArticlesList().observe(getViewLifecycleOwner(),
+                articles -> {
+                    this.articlesList = articles;
+                    binding.shimmer.stopShimmer();
+                    binding.shimmer.setVisibility(View.GONE);
+                    adapter.setArticlesList(articles);
+                    if (category.equals("general")) {
+                        saveArticlesForWidget();
+                    }
+
+                });
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+     /*   if (key.equals(getString(R.string.preference_country_key)))
+        {
+            getLatestHeadlines(sharedPreferences.getString(key,"in"));
+        }*/
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 }

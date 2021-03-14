@@ -1,52 +1,58 @@
 package com.uds.akhbar.ui.settings;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ShareCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
 import com.firebase.ui.auth.AuthUI;
-import com.uds.akhbar.LoginActivity;
 import com.uds.akhbar.R;
-import com.uds.akhbar.model.SourcesItem;
+import com.uds.akhbar.ui.home.LoginActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-public class SettingsFragment extends PreferenceFragmentCompat {
-    private ArrayList<String> entries;
-    private ArrayList<String> entriesValues;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(
-                getString(R.string.dark_mode_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = sharedPref.edit();
-        SwitchPreference switchPreference = getPreferenceManager().findPreference(getString(R.string.dark_mode_key));
-        switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            switchPreference.setChecked((Boolean) newValue);
-            if ((Boolean) newValue) {
+        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
+        PreferenceScreen preferenceScreen = getPreferenceScreen();
+        int count = preferenceScreen.getPreferenceCount();
+        for (int i = 0; i < count; i++) {
+            Preference preference = preferenceScreen.getPreference(i);
+            if (preference instanceof ListPreference) {
+                String value = sharedPreferences.getString(preference.getKey(), "");
+                setPreferenceSummary(preference, value);
+            } else if (preference instanceof SwitchPreference) {
 
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                Toast.makeText(getActivity(), "Dark Mode Enable", Toast.LENGTH_SHORT).show();
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                Toast.makeText(getActivity(), "Dark Mode Disabled", Toast.LENGTH_SHORT).show();
             }
-            editor.putBoolean(getString(R.string.dark_mode_key), (Boolean) newValue);
-            editor.apply();
-            return true;
+
+        }
+
+        SwitchPreference switchPreference = getPreferenceManager().findPreference(getString(R.string.dark_mode_key));
+        switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                switchPreference.setChecked((Boolean) newValue);
+                editor.putBoolean(SettingsFragment.this.getString(R.string.dark_mode_key), (Boolean) newValue);
+                editor.apply();
+                return true;
+            }
         });
+
+
         Preference share = getPreferenceManager().findPreference(getString(R.string.share_key));
         Preference logout = getPreferenceManager().findPreference(getString(R.string.logout_key));
         share.setOnPreferenceClickListener(preference -> {
@@ -55,7 +61,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     .from(getActivity())
                     .setType(mimeType)
                     .setChooserTitle(getString(R.string.share_app_title))
-                    .setText("Use Akhbar App for latest news " + getActivity().getPackageName())
+                    .setText("Use Akhbar App for latest news https://play.google.com/store/apps/details?id=" + getActivity().getPackageName())
                     .startChooser();
             return true;
         });
@@ -68,25 +74,47 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     });
             return true;
         });
-//        SettingsViewModel viewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
-        entries = new ArrayList<>();
-        entriesValues = new ArrayList<>();
-        ListPreference sourcesPreference = getPreferenceManager().findPreference(getString(R.string.news_sources_key));
-//            viewModel.getSources().observe(getViewLifecycleOwner(), new Observer<List<SourcesItem>>() {
-//                @Override
-//                public void onChanged(List<SourcesItem> sourcesItems) {
-//                    setUpSourcesPreference(sourcesItems);
-//                }
-//            });
-//            sourcesPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
-//            sourcesPreference.setEntryValues(entriesValues.toArray(new CharSequence[entriesValues.size()]));
     }
 
-    private void setUpSourcesPreference(List<SourcesItem> sourcesItems) {
-        for (SourcesItem source : sourcesItems) {
-            entries.add(source.getId());
-            entriesValues.add(source.getName());
+    public void setPreferenceSummary(Preference preference, String value) {
+        if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            int prefIndex = listPreference.findIndexOfValue(value);
+            if (prefIndex >= 0) {
+                listPreference.setSummary(listPreference.getEntries()[prefIndex]);
+            }
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Preference preference = findPreference(key);
+        if (preference != null) {
+            if (preference instanceof ListPreference) {
+                String value = sharedPreferences.getString(preference.getKey(), "");
+                Toast.makeText(getContext(), ((ListPreference) preference).getValue(), Toast.LENGTH_SHORT).show();
+                setPreferenceSummary(preference, value);
+            } else if ((preference instanceof SwitchPreference)) {
+                boolean value = sharedPreferences.getBoolean(preference.getKey(), false);
+                if (value) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 }
 
