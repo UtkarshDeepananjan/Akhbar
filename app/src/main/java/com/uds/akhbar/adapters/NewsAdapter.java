@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.utils.ItemClickListener;
@@ -24,8 +23,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private final ItemClickListener mClickHandler;
     private List<Articles> articlesList;
     private final int layoutType;
-    private Context context;
-    private int lastPosition = -1;
+    private final Context context;
 
     public NewsAdapter(Context context, ItemClickListener mClickHandler, List<Articles> articlesList, int layoutType) {
         this.mClickHandler = mClickHandler;
@@ -55,15 +53,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Articles articles = articlesList.get(position);
         holder.title.setText(articles.getTitle());
-        String imageUrl=articles.getUrlToImage();
+        String imageUrl = articles.getUrlToImage();
         if (!TextUtils.isEmpty(imageUrl)) {
             Glide.with(context)
                     .load(imageUrl)
+                    .placeholder(R.drawable.image_loading)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(holder.imageView);
         }
 
 
     }
+
     @Override
     public int getItemCount() {
         return articlesList.size();
@@ -87,7 +89,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            mClickHandler.onClick(getAdapterPosition(),imageView,title);
+            mClickHandler.onClick(getAdapterPosition(), imageView, title);
         }
     }
 }

@@ -35,8 +35,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             if (preference instanceof ListPreference) {
                 String value = sharedPreferences.getString(preference.getKey(), "");
                 setPreferenceSummary(preference, value);
-            } else if (preference instanceof SwitchPreference) {
-
             }
 
         }

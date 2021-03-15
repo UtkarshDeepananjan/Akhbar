@@ -3,12 +3,21 @@ package com.uds.akhbar.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.AppWidgetTarget;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.uds.akhbar.R;
@@ -55,17 +64,10 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
         Articles articles = mArticles.get(position);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.articles_widget_list_item);
         rv.setTextViewText(R.id.article_title, articles.getTitle());
-        /*try {
-            Bitmap bitmap = Glide.with(context)
-                    .load(imageUrl)
-                    .centerCrop()
-
-                    .into(holder.imageView);
-            rv.setImageViewBitmap(R.id.article_image, bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+        /*AppWidgetTarget appWidgetTarget=new AppWidgetTarget(context,rv,R.id.article_image,a)
+        Glide.with(context)
+                .load(articles.getUrlToImage())
+                .into(new );*/
         Bundle extra=new Bundle();
         extra.putParcelable(ArticleDetailActivity.ARTICLE_DETAIL,articles);
         Intent intent = new Intent();

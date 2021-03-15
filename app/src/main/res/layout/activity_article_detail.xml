@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,133 +38,98 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/content_description_article_image"
-            android:transitionName="article_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            tools:src="@tools:sample/backgrounds/scenic"
-            tools:targetApi="lollipop" />
-
-
-        <TextView
-            android:id="@+id/article_title"
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.1"
-            android:paddingStart="16dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
-            android:text="@{article.title}"
-            android:textSize="22sp"
-            android:transitionName="article_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/article_image"
-            tools:targetApi="lollipop"
-            tools:text="@tools:sample/full_names" />
 
         <ScrollView
             android:id="@+id/article_detail_scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            ads:layout_constraintBottom_toTopOf="@+id/view_full_article"
-            ads:layout_constraintVertical_bias="0.90999997"
+            ads:layout_constraintBottom_toBottomOf="@+id/view_full_article"
+            ads:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTextView">
+            app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/article_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/content_description_article_image"
+                    android:scaleType="centerInside"
+                    android:transitionName="article_image"
+                    ads:layout_constraintDimensionRatio="H,2:9"
+                    ads:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic"
+                    tools:targetApi="lollipop" />
+
+
+                <TextView
+                    android:id="@+id/article_title"
+                    style="@style/TitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@{article.title}"
+                    android:textSize="22sp"
+                    android:transitionName="article_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/article_image"
+                    tools:targetApi="lollipop"
+                    tools:text="@tools:sample/full_names" />
 
                 <TextView
 
                     android:id="@+id/article_detail"
                     style="@style/TextAppearance.MaterialComponents.Body1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:alpha="0.6"
                     android:ems="2"
                     android:lineSpacingMultiplier="1.3"
-                    android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:paddingEnd="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@{article.description}"
+                    android:text="@{BindingUtils.formatDescription(article.content,article.description)}"
                     android:textSize="18sp"
+                    ads:layout_constraintEnd_toEndOf="parent"
+                    ads:layout_constraintStart_toStartOf="@id/dateTextView"
+                    ads:layout_constraintTop_toBottomOf="@+id/dateTextView"
                     tools:targetApi="lollipop" />
+
 
                 <TextView
-
-                    android:id="@+id/article_content"
-                    style="@style/TextAppearance.MaterialComponents.Body1"
-                    android:layout_width="match_parent"
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:alpha="0.6"
-                    android:ems="2"
-                    android:lineSpacingMultiplier="1.3"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@{BindingUtils.truncateExtra(article.content)}"
-                    android:textSize="18sp"
-                    tools:targetApi="lollipop" />
-            </LinearLayout>
+                    android:layout_marginTop="8dp"
+                    android:text="@{BindingUtils.formatDateForDetails(article.publishedAt)}"
+                    android:textFontWeight="500"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    ads:layout_constraintStart_toStartOf="@id/article_title"
+                    ads:layout_constraintTop_toBottomOf="@+id/article_title"
+                    tools:text="@tools:sample/date/ddmmyy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{BindingUtils.formatDateForDetails(article.publishedAt)}"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/article_title"
-            tools:text="@tools:sample/date/ddmmyy" />
-
-        <TextView
-            android:id="@+id/source_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{article.source.name}"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/dateTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/dateTextView"
-            tools:text="@tools:sample/first_names" />
 
         <Button
             android:id="@+id/view_full_article"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_height="0dp"
             android:text="@string/view_full_article_label"
             ads:layout_constraintBottom_toTopOf="@+id/adView"
             app:layout_constraintEnd_toEndOf="@+id/article_detail_scrollview"
-            app:layout_constraintStart_toStartOf="@+id/article_detail_scrollview"
-            app:layout_constraintTop_toBottomOf="@+id/article_detail_scrollview" />
+            app:layout_constraintStart_toStartOf="@+id/article_detail_scrollview" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"

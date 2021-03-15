@@ -1,21 +1,26 @@
 package com.uds.akhbar.ui.topheadline;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.gson.Gson;
 import com.uds.akhbar.R;
@@ -23,6 +28,7 @@ import com.uds.akhbar.adapters.NewsAdapter;
 import com.uds.akhbar.databinding.FragmentNewsBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
+import com.uds.akhbar.ui.home.HomeScreenActivity;
 import com.uds.akhbar.utils.ItemClickListener;
 import com.uds.akhbar.utils.NetworkUtils;
 
@@ -37,6 +43,8 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     private List<Articles> articlesList;
     private FragmentNewsBinding binding;
     private SharedPreferences sharedPreferences;
+    TopHeadlineViewModel topHeadlineViewModel;
+    private HomeScreenActivity mActivity;
 
     public NewsFragment() {
     }
@@ -58,15 +66,41 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mActivity = (HomeScreenActivity) context;
+
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         adapter = new NewsAdapter(getContext(), this, new ArrayList<>(), 1);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (getResources().getBoolean(R.bool.isTablet))
+            binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getSpanCount(), LinearLayout.VERTICAL));
+        else
+            binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        getLatestHeadlines(getCountryCode());
+        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(getCountryCode(), category);
+        topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
+        topHeadlineViewModel.getArticlesList(false).observe(getViewLifecycleOwner(), new Observer<List<Articles>>() {
+            @Override
+            public void onChanged(List<Articles> articles) {
+                articlesList = articles;
+                binding.shimmer.stopShimmer();
+                binding.shimmer.setVisibility(View.GONE);
+                adapter.setArticlesList(articles);
+                if (category.equals("general")) {
+                    saveArticlesForWidget();
+                }
+            }
+        });
+        binding.refresh.setOnRefreshListener(() -> {
+            getLatestHeadlines(getCountryCode(), true);
+        });
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             NetworkUtils networkUtils = new NetworkUtils(getContext());
@@ -105,28 +139,24 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         startActivity(intent, options.toBundle());
     }
 
-    private void getLatestHeadlines(String countryCode) {
-        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(countryCode, category);
-        TopHeadlineViewModel topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
-        topHeadlineViewModel.getArticlesList().observe(getViewLifecycleOwner(),
+    private void getLatestHeadlines(String countryCode, Boolean refresh) {
+        topHeadlineViewModel.getArticlesList(countryCode, refresh).observe(getViewLifecycleOwner(),
                 articles -> {
                     this.articlesList = articles;
                     binding.shimmer.stopShimmer();
                     binding.shimmer.setVisibility(View.GONE);
                     adapter.setArticlesList(articles);
-                    if (category.equals("general")) {
-                        saveArticlesForWidget();
+                    if (binding.refresh.isRefreshing()) {
+                        binding.refresh.setRefreshing(false);
                     }
-
                 });
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-     /*   if (key.equals(getString(R.string.preference_country_key)))
-        {
-            getLatestHeadlines(sharedPreferences.getString(key,"in"));
-        }*/
+        if (key.equals(getString(R.string.preference_country_key))) {
+            getLatestHeadlines(sharedPreferences.getString(key, "in"), true);
+        }
     }
 
     @Override
@@ -134,4 +164,15 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         super.onDestroy();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
+
+    private int getSpanCount() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = 400;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        return Math.max(nColumns, 2);
+    }
+
+
 }

@@ -28,7 +28,7 @@
     <string name="share_title">Share App</string>
     <string name="preference_country_key">country_code</string>
     <string name="dark_mode_key">dark_mode</string>
-
+    <bool name="isTablet">false</bool>
     <string-array name="category">
         <item>general</item>
         <item>business</item>
