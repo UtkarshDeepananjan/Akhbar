@@ -10,52 +10,65 @@
         android:layout_height="match_parent"
         tools:context=".ui.topheadline.NewsFragment">
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/empty_box"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:lottie_rawRes="@raw/empty_box" />
 
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shimmer_clip_to_children="true"
-                app:shimmer_shape="linear">
+                android:gravity="center"
+                android:text="List Is empty" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+           <com.facebook.shimmer.ShimmerFrameLayout
+               android:id="@+id/shimmer"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               app:shimmer_clip_to_children="true"
+               app:shimmer_shape="linear">
 
-                    <include layout="@layout/shimmer_placeholder" />
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
 
-                    <include layout="@layout/shimmer_placeholder" />
+                   <include layout="@layout/shimmer_placeholder" />
 
-                    <include layout="@layout/shimmer_placeholder" />
+                   <include layout="@layout/shimmer_placeholder" />
 
-                    <include layout="@layout/shimmer_placeholder" />
+                   <include layout="@layout/shimmer_placeholder" />
 
-                    <include layout="@layout/shimmer_placeholder" />
+                   <include layout="@layout/shimmer_placeholder" />
 
-                    <include layout="@layout/shimmer_placeholder" />
-                </LinearLayout>
+                   <include layout="@layout/shimmer_placeholder" />
 
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                   <include layout="@layout/shimmer_placeholder" />
+               </LinearLayout>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+           </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/article_list_item" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </FrameLayout>
+           <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+               android:id="@+id/refresh"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
 
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/recycler_view"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   tools:listitem="@layout/article_list_item" />
+           </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

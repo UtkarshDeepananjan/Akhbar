@@ -27,13 +27,13 @@ import retrofit2.Response;
 
 public class Repository {
     private final ApiInterface apiInterface;
-    private final DatabaseReference mReference;
+    private  DatabaseReference mReference;
     private boolean exists;
 
     public Repository() {
         apiInterface = ApiClient.getApiService();
-        mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());
-        mReference.keepSynced(true);
+        /*mReference = FirebaseDatabase.getInstance().getReference(FirebaseHelper.getInstance().getFirebaseUser().getUid());
+        mReference.keepSynced(true);*/
     }
 
     public static Repository getInstance() {

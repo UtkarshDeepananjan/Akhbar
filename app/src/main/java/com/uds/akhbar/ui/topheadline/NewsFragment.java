@@ -1,6 +1,5 @@
 package com.uds.akhbar.ui.topheadline;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +26,6 @@ import com.uds.akhbar.adapters.NewsAdapter;
 import com.uds.akhbar.databinding.FragmentNewsBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
-import com.uds.akhbar.ui.home.HomeScreenActivity;
 import com.uds.akhbar.utils.ItemClickListener;
 import com.uds.akhbar.utils.NetworkUtils;
 
@@ -44,7 +41,6 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     private FragmentNewsBinding binding;
     private SharedPreferences sharedPreferences;
     TopHeadlineViewModel topHeadlineViewModel;
-    private HomeScreenActivity mActivity;
 
     public NewsFragment() {
     }
@@ -65,12 +61,6 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mActivity = (HomeScreenActivity) context;
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -82,13 +72,13 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         else
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(getCountryCode(), category);
         topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
-        topHeadlineViewModel.getArticlesList(false).observe(getViewLifecycleOwner(), new Observer<List<Articles>>() {
-            @Override
-            public void onChanged(List<Articles> articles) {
+        topHeadlineViewModel.getArticlesList(false).observe(getViewLifecycleOwner(), articles -> {
+            if (articles.size() > 0) {
+                binding.emptyBox.setVisibility(View.GONE);
                 articlesList = articles;
                 binding.shimmer.stopShimmer();
                 binding.shimmer.setVisibility(View.GONE);
@@ -96,11 +86,14 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
                 if (category.equals("general")) {
                     saveArticlesForWidget();
                 }
+            } else {
+                binding.emptyBox.setVisibility(View.VISIBLE);
+                binding.shimmer.stopShimmer();
+                binding.shimmer.setVisibility(View.GONE);
+                adapter.setArticlesList(articles);
             }
         });
-        binding.refresh.setOnRefreshListener(() -> {
-            getLatestHeadlines(getCountryCode(), true);
-        });
+        binding.refresh.setOnRefreshListener(() -> getLatestHeadlines(getCountryCode()));
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             NetworkUtils networkUtils = new NetworkUtils(getContext());
@@ -139,8 +132,8 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         startActivity(intent, options.toBundle());
     }
 
-    private void getLatestHeadlines(String countryCode, Boolean refresh) {
-        topHeadlineViewModel.getArticlesList(countryCode, refresh).observe(getViewLifecycleOwner(),
+    private void getLatestHeadlines(String countryCode) {
+        topHeadlineViewModel.getArticlesList(countryCode, true).observe(getViewLifecycleOwner(),
                 articles -> {
                     this.articlesList = articles;
                     binding.shimmer.stopShimmer();
@@ -155,7 +148,7 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.preference_country_key))) {
-            getLatestHeadlines(sharedPreferences.getString(key, "in"), true);
+            getLatestHeadlines(sharedPreferences.getString(key, "in"));
         }
     }
 

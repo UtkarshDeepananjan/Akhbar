@@ -74,13 +74,13 @@ public class ArticleDetailActivity extends AppCompatActivity {
             onBackPressed();
         }
         if (k == R.id.save_menu) {
-            if (TextUtils.isEmpty(articleId)) {
+          /*  if (TextUtils.isEmpty(articleId)) {
                 articleId = Repository.getInstance().saveArticles(articles);
                 toggleBookmarkIcon();
             } else {
                 deleteArticle();
 
-            }
+            }*/
         }
         if (k == R.id.share_menu) {
             String mimeType = "text/plain";

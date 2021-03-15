@@ -37,7 +37,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> titleText.setText(destination.getLabel()));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
         Glide.with(getApplicationContext())
-                .load(FirebaseHelper.getInstance().getProfilePicture())
+                .load(R.drawable.googleg_standard_color_18)
                 .centerCrop()
 
                 .into(profilePicture);
