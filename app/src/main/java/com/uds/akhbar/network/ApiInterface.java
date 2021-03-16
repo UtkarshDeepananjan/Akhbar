@@ -19,11 +19,9 @@ public interface ApiInterface {
 
     @Headers({"X-Api-Key:" + BuildConfig.ApiKey})
     @GET("everything")
-    Call<NewsResponse> getSearchResults(@Query("q") String query);
+    Call<NewsResponse> getSearchResults(@Query("q") String query,@Query("sortBy") String shortBy);
 
-    @Headers({"X-Api-Key:" + BuildConfig.ApiKey})
-    @GET("sources")
-    Call<SourceResponse> getSourcesResults();
+
 
 
 

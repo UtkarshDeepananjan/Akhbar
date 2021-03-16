@@ -4,26 +4,34 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="@string/dark_mode_key"
-        android:title="Dark Mode"
+        android:key="@string/pref_dark_mode_key"
+        android:title="@string/dark_mode_label"
         app:icon="@drawable/ic_baseline_dark_mode_24" />
 
     <ListPreference
-        android:entries="@array/country_values"
-        android:title="Country"
-        app:defaultValue="in"
         android:defaultValue="India"
+        android:entries="@array/country_values"
+        android:title="@string/country_label"
+        app:defaultValue="in"
         app:entryValues="@array/country_key"
         app:icon="@drawable/ic_country_24"
-        app:key="@string/preference_country_key" />
+        app:key="@string/pref_country_key" />
+    <ListPreference android:defaultValue="English"
+        android:entries="@array/language_label"
+        android:title="Language"
+        app:defaultValue="en"
+        app:entryValues="@array/language_key"
+        app:icon="@drawable/ic_baseline_language_24"
+        app:key="@string/pref_language_key"/>
+
     <Preference
         app:icon="@drawable/ic_baseline_share_24"
-        app:key="@string/share_key"
-        app:title="@string/share_title" />
+        app:key="@string/pref_share_key"
+        app:title="@string/share_label" />
 
     <Preference
         app:icon="@drawable/ic_baseline_logout_24"
-        app:key="@string/logout_key"
+        app:key="@string/pref_logout_key"
         app:title="@string/logout_title" />
 
 

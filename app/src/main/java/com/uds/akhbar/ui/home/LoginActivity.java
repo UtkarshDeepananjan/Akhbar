@@ -1,6 +1,5 @@
 package com.uds.akhbar.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean value = sharedPreferences.getBoolean(getString(R.string.dark_mode_key), false);
+        boolean value = sharedPreferences.getBoolean(getString(R.string.pref_dark_mode_key), false);
         if (value) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -92,12 +91,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void saveCountryCode(String countryCode) {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.preference_file_key), countryCode);
-        editor.apply();
-    }
 
     @Override
     public void onBackPressed() {

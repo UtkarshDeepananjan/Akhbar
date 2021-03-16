@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <com.airbnb.lottie.LottieAnimationView
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="List Is empty" />
+                android:text="@string/empty_list_label" />
         </LinearLayout>
 
            <com.facebook.shimmer.ShimmerFrameLayout

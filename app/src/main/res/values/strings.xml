@@ -1,35 +1,30 @@
 <resources>
-    <string name="app_name">Akhbar</string>
+    <string name="app_name" translatable="false">Akhbar</string>
 
     <string name="facebook_application_id" translatable="false">166385061760243</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb166385061760243</string>
-    <string name="ad_app_id">ca-app-pub-1175998725156444~3452033341</string>
-    <string name="banner_ad_unit">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_app_id" translatable="false">ca-app-pub-1175998725156444~3452033341</string>
+    <string name="banner_ad_unit" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!-- Preference Keys -->
+    <string name="pref_dark_mode_key" translatable="false">dark_mode</string>
+    <string name="pref_share_key" translatable="false">share_key</string>
+    <string name="pref_logout_key" translatable="false">logout_key</string>
+    <string name="pref_widget_key" translatable="false">widget:key</string>
+    <string name="pref_country_key" translatable="false">country_code</string>
+
+
+    <!-- Titles and Labels-->
+
     <string name="title_activity_home_screen">Home</string>
     <string name="title_search">Search</string>
     <string name="title_top_headline">Top Headline</string>
     <string name="title_saved_articles">Saved Articles</string>
     <string name="title_settings">Settings</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
     <string name="logout_title">Logout</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="share_title">Share App</string>
-    <string name="preference_country_key">country_code</string>
-    <string name="dark_mode_key">dark_mode</string>
     <bool name="isTablet">false</bool>
-    <string-array name="category">
+    <string-array name="category_value">
         <item>general</item>
         <item>business</item>
         <item>entertainment</item>
@@ -38,20 +33,16 @@
         <item>sports</item>
         <item>technology</item>
     </string-array>
-    <string name="content_description_article_image">Article Image</string>
-    <string name="share_key">share_key</string>
-    <string name="logout_key">logout_key</string>
+    <string name="content_description_article_image">Article\'s Image</string>
     <string name="share_app_title">Share App…</string>
-    <string name="news_sources_key">news_sources</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="image_desc">Article Image</string>
-    <string name="image_btn_desc_next">Next Button</string>
-    <string name="image_btn_desc_prev">Previous Button</string>
     <string name="save_label">Save</string>
     <string name="share_label">Share</string>
     <string name="view_full_article_label">View Full Article</string>
     <string name="empty_view_text">No Articles Found</string>
-    <string name="preference_file_key">com_uds_akhbar_preference</string>
-    <string name="pref_widget_key">widget:key</string>
+    <string name="empty_list_label">List Is empty</string>
+    <string name="dark_mode_label">Dark Mode</string>
+    <string name="country_label">Country</string>
+    <string name="pref_language_key">language_key</string>
+
+
 </resources>

@@ -74,13 +74,13 @@ public class ArticleDetailActivity extends AppCompatActivity {
             onBackPressed();
         }
         if (k == R.id.save_menu) {
-          /*  if (TextUtils.isEmpty(articleId)) {
-                articleId = Repository.getInstance().saveArticles(articles);
+            if (TextUtils.isEmpty(articleId)) {
+                articleId = Repository.getInstance(getApplicationContext()).saveArticles(articles);
                 toggleBookmarkIcon();
             } else {
                 deleteArticle();
 
-            }*/
+            }
         }
         if (k == R.id.share_menu) {
             String mimeType = "text/plain";
@@ -95,7 +95,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
     }
 
     private void deleteArticle() {
-        Repository.getInstance().deleteArticle(articleId);
+        Repository.getInstance(getApplicationContext()).deleteArticle(articleId);
         articleId = null;
         toggleBookmarkIcon();
     }

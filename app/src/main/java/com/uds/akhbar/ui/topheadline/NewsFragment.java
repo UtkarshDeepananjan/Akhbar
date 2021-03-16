@@ -1,5 +1,6 @@
 package com.uds.akhbar.ui.topheadline;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
@@ -26,6 +28,7 @@ import com.uds.akhbar.adapters.NewsAdapter;
 import com.uds.akhbar.databinding.FragmentNewsBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
+import com.uds.akhbar.ui.home.HomeScreenActivity;
 import com.uds.akhbar.utils.ItemClickListener;
 import com.uds.akhbar.utils.NetworkUtils;
 
@@ -40,7 +43,8 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     private List<Articles> articlesList;
     private FragmentNewsBinding binding;
     private SharedPreferences sharedPreferences;
-    TopHeadlineViewModel topHeadlineViewModel;
+    private TopHeadlineViewModel topHeadlineViewModel;
+    private HomeScreenActivity activity;
 
     public NewsFragment() {
     }
@@ -51,6 +55,12 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         args.putString(CATEGORY_PARAMS, category);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = (HomeScreenActivity) context;
     }
 
     @Override
@@ -72,25 +82,25 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
         else
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(getCountryCode(), category);
+        TopHeadlineViewModelFactory factory = new TopHeadlineViewModelFactory(getCountryCode(), category,getContext());
         topHeadlineViewModel = new ViewModelProvider(this, factory).get(TopHeadlineViewModel.class);
-        topHeadlineViewModel.getArticlesList(false).observe(getViewLifecycleOwner(), articles -> {
-            if (articles.size() > 0) {
-                binding.emptyBox.setVisibility(View.GONE);
-                articlesList = articles;
+        topHeadlineViewModel.getArticlesList(false,getContext()).observe(getViewLifecycleOwner(), newsResponse -> {
+            if (newsResponse.getStatus().equalsIgnoreCase("ok")) {
+                articlesList = newsResponse.getArticles();
+                binding.emptyBox.setVisibility(articlesList.size() == 0 ? View.VISIBLE : View.GONE);
                 binding.shimmer.stopShimmer();
                 binding.shimmer.setVisibility(View.GONE);
-                adapter.setArticlesList(articles);
+                adapter.setArticlesList(articlesList);
                 if (category.equals("general")) {
                     saveArticlesForWidget();
                 }
             } else {
-                binding.emptyBox.setVisibility(View.VISIBLE);
                 binding.shimmer.stopShimmer();
                 binding.shimmer.setVisibility(View.GONE);
-                adapter.setArticlesList(articles);
+                adapter.setArticlesList(articlesList);
+                Toast.makeText(getContext(), newsResponse.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
         binding.refresh.setOnRefreshListener(() -> getLatestHeadlines(getCountryCode()));
@@ -109,7 +119,7 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
 
 
     private String getCountryCode() {
-        return sharedPreferences.getString(getString(R.string.preference_country_key), "in");
+        return sharedPreferences.getString(getString(R.string.pref_country_key), "in");
     }
 
     private void saveArticlesForWidget() {
@@ -133,22 +143,26 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
     }
 
     private void getLatestHeadlines(String countryCode) {
-        topHeadlineViewModel.getArticlesList(countryCode, true).observe(getViewLifecycleOwner(),
-                articles -> {
-                    this.articlesList = articles;
-                    binding.shimmer.stopShimmer();
-                    binding.shimmer.setVisibility(View.GONE);
-                    adapter.setArticlesList(articles);
-                    if (binding.refresh.isRefreshing()) {
-                        binding.refresh.setRefreshing(false);
-                    }
-                });
+        topHeadlineViewModel.getArticlesList(countryCode, true,getContext()).observe(getViewLifecycleOwner(), newsResponse -> {
+            if (newsResponse.getStatus().equalsIgnoreCase("ok")) {
+                articlesList = newsResponse.getArticles();
+                binding.shimmer.stopShimmer();
+                binding.shimmer.setVisibility(View.GONE);
+                adapter.setArticlesList(articlesList);
+                if (binding.refresh.isRefreshing()) {
+                    binding.refresh.setRefreshing(false);
+                }
+            } else {
+                Toast.makeText(activity, newsResponse.getCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.preference_country_key))) {
-            getLatestHeadlines(sharedPreferences.getString(key, "in"));
+        if (isAdded()) {
+            if (key.equals(getString(R.string.pref_country_key)))
+                getLatestHeadlines(sharedPreferences.getString(key, "in"));
         }
     }
 
@@ -160,7 +174,7 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
 
     private int getSpanCount() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int widthDivider = 400;
         int width = displayMetrics.widthPixels;
         int nColumns = width / widthDivider;

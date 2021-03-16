@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.uds.akhbar.R;
 import com.uds.akhbar.adapters.NewsAdapter;
+import com.uds.akhbar.databinding.FragmentSearchBinding;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
 import com.uds.akhbar.utils.ItemClickListener;
@@ -36,12 +38,11 @@ public class SearchFragment extends Fragment implements ItemClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        com.uds.akhbar.databinding.FragmentSearchBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
+        FragmentSearchBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         adapter = new NewsAdapter(getContext(), this, new ArrayList<>(), 2);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
-
 
         binding.searchView.onActionViewExpanded();
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -53,18 +54,20 @@ public class SearchFragment extends Fragment implements ItemClickListener {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText))
-                    searchViewModel.getArticles(newText).observe(getViewLifecycleOwner(),
-                            articles -> {
-                                articlesList = articles;
-                                adapter.setArticlesList(articles);
-                            });
+                if (!TextUtils.isEmpty(newText))
+                    searchViewModel.getArticles(newText, getContext()).observe(getViewLifecycleOwner(), newsResponse -> {
+                        if (newsResponse.getStatus().equalsIgnoreCase("ok")) {
+                            articlesList = newsResponse.getArticles();
+                            adapter.setArticlesList(articlesList);
+                        } else {
+                            Toast.makeText(getContext(), newsResponse.getCode(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 adapter.notifyDataSetChanged();
                 return false;
             }
         });
         binding.searchView.setOnCloseListener(() -> {
-            adapter.clearList();
             return true;
         });
         return binding.getRoot();
@@ -81,4 +84,5 @@ public class SearchFragment extends Fragment implements ItemClickListener {
                         Pair.create(titleTextView, "article_title"));
         startActivity(intent, options.toBundle());
     }
+
 }

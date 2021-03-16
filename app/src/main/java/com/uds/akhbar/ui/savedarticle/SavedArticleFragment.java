@@ -40,8 +40,7 @@ public class SavedArticleFragment extends Fragment implements ItemClickListener 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsAdapter adapter = new NewsAdapter(getActivity(), this, new ArrayList<>(), 1);
         recyclerView.setAdapter(adapter);
-/*
-        savedArticleViewModel.getArticles().observe(getViewLifecycleOwner(), articles -> {
+        savedArticleViewModel.getArticles(getContext()).observe(getViewLifecycleOwner(), articles -> {
             articlesList = articles;
             if (articles.isEmpty()) {
                 animationView.setVisibility(View.VISIBLE);
@@ -52,7 +51,6 @@ public class SavedArticleFragment extends Fragment implements ItemClickListener 
             }
             adapter.setArticlesList(articles);
         });
-*/
         return root;
     }
 

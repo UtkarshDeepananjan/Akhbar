@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_home_screen">घर</string>
+    <string name="title_search">खोजें</string>
+    <string name="title_top_headline">शीर्ष शीर्षक</string>
+    <string name="title_saved_articles">सहेजे गए लेख</string>
+    <string name="title_settings">समायोजन</string>
+    <string name="logout_title">लॉग आउट</string>
+
+    <string name="content_description_article_image">लेख की छवि</string>
+    <string name="share_app_title">ऐप शेयर करें…</string>
+    <string name="save_label">सहेजें</string>
+    <string name="share_label">शेयर</string>
+    <string name="view_full_article_label">पूरा लेख देखें</string>
+    <string name="empty_view_text">कोई लेख नहीं मिला</string>
+    <string name="empty_list_label">सूची खाली है</string>
+    <string name="dark_mode_label">डार्क मोड</string>
+    <string name="country_label">देश</string>
+</resources>

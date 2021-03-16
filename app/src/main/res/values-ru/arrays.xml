@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="country_values">
+        <item>Китай</item>
+        <item>Индия</item>
+        <item>Россия</item>
+        <item>Соединенные Штаты Америки</item>
+    </string-array>
+
+    <string-array name="language_label">
+        <item>中国人</item>
+        <item>English</item>
+        <item>हिन्दी</item>
+        <item>русский</item>
+    </string-array>
+
+</resources>

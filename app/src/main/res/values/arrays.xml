@@ -1,13 +1,15 @@
 <resources>
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
-    </string-array>
-    <string-array name="country_key">
+    <string-array  name="country_key">
         <item>cn</item>
         <item>in</item>
         <item>ru</item>
         <item>us</item>
+    </string-array>
+    <string-array name="language_key">
+        <item>zh</item>
+        <item>en</item>
+        <item>hi</item>
+        <item>ru</item>
     </string-array>
     <string-array name="country_values">
         <item>China</item>
@@ -16,4 +18,10 @@
         <item>USA</item>
     </string-array>
 
+    <string-array name="language_label">
+        <item>中国人</item>
+        <item>English</item>
+        <item>हिन्दी</item>
+        <item>русский</item>
+    </string-array>
 </resources>

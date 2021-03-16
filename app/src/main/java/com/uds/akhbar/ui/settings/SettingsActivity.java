@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         titleText.setText(getString(R.string.title_settings));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);
         Glide.with(getApplicationContext())
-                .load(R.drawable.googleg_standard_color_18)
+                .load(firebaseHelper.getProfilePicture())
                 .into(profilePicture);
 
     }

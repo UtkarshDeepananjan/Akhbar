@@ -1,42 +1,41 @@
 package com.uds.akhbar.ui.topheadline;
 
+import android.content.Context;
 import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.uds.akhbar.model.Articles;
+import com.uds.akhbar.model.NewsResponse;
 import com.uds.akhbar.repository.Repository;
-
-import java.util.List;
 
 public class TopHeadlineViewModel extends ViewModel {
 
-    private LiveData<List<Articles>> mArticles;
+    private LiveData<NewsResponse> mArticles;
     private final Pair<String, String> countryCategoryPair;
 
 
-    public TopHeadlineViewModel(String countryCode, String category) {
-        mArticles = Repository.getInstance().getTopHeadlines(countryCode, category);
+    public TopHeadlineViewModel(String countryCode, String category, Context context) {
+        mArticles = Repository.getInstance(context).getTopHeadlines(countryCode, category);
         countryCategoryPair = new Pair<>(countryCode, category);
 
     }
 
-    private LiveData<List<Articles>> refresh(String countryCode, String category) {
-        return Repository.getInstance().getTopHeadlines(countryCode, category);
+    private LiveData<NewsResponse> refresh(String countryCode, String category,Context context) {
+        return Repository.getInstance(context).getTopHeadlines(countryCode, category);
     }
 
 
-    public LiveData<List<Articles>> getArticlesList(Boolean refresh) {
+    public LiveData<NewsResponse> getArticlesList(Boolean refresh,Context context) {
         if (refresh) {
-            mArticles = refresh(countryCategoryPair.first, countryCategoryPair.second);
+            mArticles = refresh(countryCategoryPair.first, countryCategoryPair.second,context);
         }
         return mArticles;
     }
 
-    public LiveData<List<Articles>> getArticlesList(String countryCode, Boolean refresh) {
+    public LiveData<NewsResponse> getArticlesList(String countryCode, Boolean refresh,Context context) {
         if (refresh) {
-            mArticles = refresh(countryCode, countryCategoryPair.second);
+            mArticles = refresh(countryCode, countryCategoryPair.second,context);
         }
         return mArticles;
     }

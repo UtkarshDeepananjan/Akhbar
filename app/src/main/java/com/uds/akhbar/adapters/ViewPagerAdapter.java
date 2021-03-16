@@ -17,7 +17,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
         super(fm, behavior);
-        categories = context.getResources().getStringArray(R.array.category);
+        categories = context.getResources().getStringArray(R.array.category_value);
+
         newsFragments = new NewsFragment[categories.length];
         for (int i = 0; i < categories.length; i++) {
             newsFragments[i] = NewsFragment.newInstance(categories[i]);

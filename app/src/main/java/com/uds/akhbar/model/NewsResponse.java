@@ -1,28 +1,44 @@
 package com.uds.akhbar.model;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class NewsResponse{
+import java.util.List;
 
-	@SerializedName("totalResults")
-	private int totalResults;
+public class NewsResponse {
 
-	@SerializedName("articles")
-	private List<Articles> articles;
+    @SerializedName("totalResults")
+    private int totalResults;
 
-	@SerializedName("status")
-	private String status;
+    @SerializedName("articles")
+    private List<Articles> articles;
 
-	public int getTotalResults(){
-		return totalResults;
-	}
+    @SerializedName("status")
+    private String status;
 
-	public List<Articles> getArticles(){
-		return articles;
-	}
 
-	public String getStatus(){
-		return status;
-	}
+    @SerializedName("code")
+    private String code;
+
+    @SerializedName("message")
+    private String message;
+
+    public int getTotalResults() {
+        return totalResults;
+    }
+
+    public List<Articles> getArticles() {
+        return articles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

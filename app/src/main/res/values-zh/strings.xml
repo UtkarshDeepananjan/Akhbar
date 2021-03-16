@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_home_screen">家</string>
+    <string name="title_search">搜索</string>
+    <string name="title_top_headline">头条新闻</string>
+    <string name="title_saved_articles">保存的文章</string>
+    <string name="title_settings">设定值</string>
+    <string name="logout_title">登出</string>
+
+    <string name="content_description_article_image">文章图片</string>
+    <string name="share_app_title">共享应用…</string>
+    <string name="save_label">救</string>
+    <string name="share_label">分享</string>
+    <string name="view_full_article_label">查看全文</string>
+    <string name="empty_view_text">找不到文章</string>
+    <string name="empty_list_label">清单为空</string>
+    <string name="dark_mode_label">暗模式</string>
+    <string name="country_label">国家</string>
+</resources>

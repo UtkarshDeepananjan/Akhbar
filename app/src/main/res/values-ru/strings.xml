@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_home_screen">Дома</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_top_headline">Верхний заголовок</string>
+    <string name="title_saved_articles">Верхний заголовок</string>
+    <string name="title_settings">Настройки</string>
+
+    <string name="logout_title">Выйти</string>
+    <string name="content_description_article_image">Изображение статьи</string>
+
+    <string name="share_app_title">Поделиться приложением…</string>
+    <string name="save_label">Сохранять</string>
+    <string name="share_label">доля</string>
+    <string name="view_full_article_label">Просмотреть всю статью</string>
+    <string name="empty_view_text">Статьи не найдены</string>
+    <string name="empty_list_label">Список пуст</string>
+    <string name="dark_mode_label">Темный режим</string>
+    <string name="country_label">Страна</string>
+</resources>

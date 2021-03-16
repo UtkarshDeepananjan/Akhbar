@@ -8,25 +8,25 @@ import com.google.gson.annotations.SerializedName;
 public class SourcesItem implements Parcelable {
 
 	@SerializedName("country")
-	private String country;
+	private final String country;
 
 	@SerializedName("name")
-	private String name;
+	private final String name;
 
 	@SerializedName("description")
-	private String description;
+	private final String description;
 
 	@SerializedName("language")
-	private String language;
+	private final String language;
 
 	@SerializedName("id")
-	private String id;
+	private final String id;
 
 	@SerializedName("category")
-	private String category;
+	private final String category;
 
 	@SerializedName("url")
-	private String url;
+	private final String url;
 
 	protected SourcesItem(Parcel in) {
 		country = in.readString();

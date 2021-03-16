@@ -37,14 +37,15 @@
             android:label="@string/title_settings" />
         <activity
             android:name=".ui.home.HomeScreenActivity"
-            android:label="@string/title_activity_home_screen" >
+            android:label="@string/title_activity_home_screen"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        </activity>
+        <activity android:name=".ui.home.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.home.LoginActivity">
 
 
         </activity>
