@@ -30,13 +30,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean(getString(R.string.pref_dark_mode_key), false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_home_screen);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         FirebaseHelper firebaseHelper = FirebaseHelper.getInstance();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -56,7 +51,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                 Snackbar mySnackBar;
                 if (aBoolean) {
                     if (sharedPreferences.getBoolean(getString(R.string.pref_first_launch), false)) {
-                        mySnackBar = Snackbar.make(root, "Internet Connection Available", Snackbar.LENGTH_SHORT);
+                        mySnackBar = Snackbar.make(root, getString(R.string.internet_available), Snackbar.LENGTH_SHORT);
                         mySnackBar.setBackgroundTint(ContextCompat.getColor(this, android.R.color.holo_green_dark));
                         mySnackBar.setAnchorView(navView);
                         mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -65,7 +60,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                     sharedPreferences.edit().putBoolean(getString(R.string.pref_first_launch), true).apply();
 
                 } else {
-                    mySnackBar = Snackbar.make(root, getString(R.string.pref_first_launch), Snackbar.LENGTH_INDEFINITE);
+                    mySnackBar = Snackbar.make(root, getString(R.string.internet_unavailable), Snackbar.LENGTH_INDEFINITE);
                     mySnackBar.setBackgroundTint(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                     mySnackBar.setAnchorView(navView);
                     mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));

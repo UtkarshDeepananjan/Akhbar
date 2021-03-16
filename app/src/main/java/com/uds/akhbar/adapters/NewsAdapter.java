@@ -58,7 +58,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.image_loading)
-                    .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(holder.imageView);
         }
@@ -69,11 +68,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return articlesList.size();
-    }
-
-    public void clearList() {
-        this.articlesList.clear();
-        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -16,4 +16,6 @@
     <string name="empty_list_label">सूची खाली है</string>
     <string name="dark_mode_label">डार्क मोड</string>
     <string name="country_label">देश</string>
+    <string name="internet_available">इंटरनेट कनेक्शन उपलब्ध है</string>
+    <string name="internet_unavailable">इंटरनेट कनेक्शन उपलब्ध नहीं है</string>
 </resources>

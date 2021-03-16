@@ -22,26 +22,24 @@ public class ApiClient {
 
 
     public static ApiInterface getApiService(Context context) {
-        Interceptor networkInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                // set max-age and max-stale properties for cache header
-                CacheControl cacheControl = new CacheControl.Builder()
-                        .maxAge(1, TimeUnit.HOURS)
-                        .maxStale(3, TimeUnit.DAYS)
-                        .build();
-                return chain.proceed(chain.request())
-                        .newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", cacheControl.toString())
-                        .build();
-            }
+        Interceptor networkInterceptor = chain -> {
+            // set max-age and max-stale properties for cache header
+            CacheControl cacheControl = new CacheControl.Builder()
+                    .maxAge(1, TimeUnit.HOURS)
+                    .maxStale(3, TimeUnit.DAYS)
+                    .build();
+            return chain.proceed(chain.request())
+                    .newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", cacheControl.toString())
+                    .build();
         };
 
         if (retrofit == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-            Cache cache = new Cache(context.getApplicationContext().getCacheDir(), 5 * 1024 * 1024);
+            Cache cache = new Cache(context.getApplicationContext().getCacheDir(),
+                    10 * 1024 * 1024);
             // Building OkHttp client
             OkHttpClient httpClient = new OkHttpClient.Builder()
                     .cache(cache)

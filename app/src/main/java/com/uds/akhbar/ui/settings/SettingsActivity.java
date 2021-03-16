@@ -1,6 +1,8 @@
 package com.uds.akhbar.ui.settings;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,9 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-
+        ImageView backButton = findViewById(R.id.back_button);
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(v -> finish());
         TextView titleText = findViewById(R.id.title_textView);
         titleText.setText(getString(R.string.title_settings));
         CircleImageView profilePicture = findViewById(R.id.iv_profile_picture);

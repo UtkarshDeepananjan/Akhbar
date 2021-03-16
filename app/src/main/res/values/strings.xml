@@ -35,6 +35,8 @@
     <string name="empty_list_label">List Is empty</string>
     <string name="dark_mode_label">Dark Mode</string>
     <string name="country_label">Country</string>
+    <string name="internet_available">Internet Connection Available</string>
+    <string name="internet_unavailable">No Internet Connection</string>
 
 
     <string-array name="category_value">

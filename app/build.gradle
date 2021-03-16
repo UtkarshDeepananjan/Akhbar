@@ -3,6 +3,14 @@ plugins {
 }
 apply plugin: 'com.google.gms.google-services'
 android {
+    signingConfigs {
+        release_config {
+            storeFile file('D:\\Projects\\Akhbar\\akhbar.jks')
+            storePassword 'uds-akhbar-28'
+            keyPassword 'uds-akhbar-28'
+            keyAlias 'akhbar-alias'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -24,9 +32,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "ApiKey", ApiKey)
+            signingConfig signingConfigs.debug
         }
         debug {
             buildConfigField("String", "ApiKey", ApiKey)
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -59,7 +69,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.3.0"
@@ -68,7 +78,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation "com.airbnb.android:lottie:3.4.0"
+    implementation 'com.airbnb.android:lottie:3.6.1'
 
     implementation "com.github.YarikSOffice:lingver:1.3.0"
 }

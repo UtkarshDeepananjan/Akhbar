@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.uds.akhbar.R;
 import com.uds.akhbar.model.Articles;
 import com.uds.akhbar.ui.detailarticle.ArticleDetailActivity;
+import com.uds.akhbar.utils.BindingUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
     public void onCreate() {
 
     }
+
     @Override
     public void onDataSetChanged() {
         getArticlesForWidget();
@@ -59,6 +61,7 @@ public class ArticlesRemoteViewsFactory implements RemoteViewsService.RemoteView
         Articles articles = mArticles.get(position);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.articles_widget_list_item);
         rv.setTextViewText(R.id.article_title, articles.getTitle());
+        rv.setTextViewText(R.id.tv_date, BindingUtils.formatDateForDetails(articles.getPublishedAt()));
         RequestBuilder<Bitmap> builder =
                 Glide.with(context).asBitmap()
                         .load(articles.getUrlToImage());
