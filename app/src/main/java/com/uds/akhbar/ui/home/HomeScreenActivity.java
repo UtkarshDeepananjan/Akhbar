@@ -32,7 +32,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean(getString(R.string.pref_dark_mode_key), true)) {
+        if (sharedPreferences.getBoolean(getString(R.string.pref_dark_mode_key), false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -62,10 +62,10 @@ public class HomeScreenActivity extends AppCompatActivity {
                         mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));
                         mySnackBar.show();
                     }
-                    sharedPreferences.edit().putBoolean("first_launch", true).apply();
+                    sharedPreferences.edit().putBoolean(getString(R.string.pref_first_launch), true).apply();
 
                 } else {
-                    mySnackBar = Snackbar.make(root, "No Internet Connection", Snackbar.LENGTH_INDEFINITE);
+                    mySnackBar = Snackbar.make(root, getString(R.string.pref_first_launch), Snackbar.LENGTH_INDEFINITE);
                     mySnackBar.setBackgroundTint(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                     mySnackBar.setAnchorView(navView);
                     mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -79,12 +79,12 @@ public class HomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        sharedPreferences.edit().putBoolean("first_launch", false).apply();
+        sharedPreferences.edit().putBoolean(getString(R.string.pref_first_launch), false).apply();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sharedPreferences.edit().putBoolean("first_launch", false).apply();
+        sharedPreferences.edit().putBoolean(getString(R.string.pref_first_launch), false).apply();
     }
 }
