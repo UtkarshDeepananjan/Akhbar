@@ -14,11 +14,12 @@ import com.uds.akhbar.ui.topheadline.NewsFragment;
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private final NewsFragment[] newsFragments;
     String[] categories;
+    String[] categoriesLabel;
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
         super(fm, behavior);
         categories = context.getResources().getStringArray(R.array.category_value);
-
+        categoriesLabel = context.getResources().getStringArray(R.array.category_label);
         newsFragments = new NewsFragment[categories.length];
         for (int i = 0; i < categories.length; i++) {
             newsFragments[i] = NewsFragment.newInstance(categories[i]);
@@ -28,7 +29,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return categories[position];
+        return categoriesLabel[position];
     }
 
     @NonNull

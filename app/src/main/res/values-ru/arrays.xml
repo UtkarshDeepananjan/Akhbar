@@ -14,4 +14,14 @@
         <item>русский</item>
     </string-array>
 
+    <string-array name="category_label">
+        <item>Общее</item>
+        <item>бизнес</item>
+        <item>развлекательная программа</item>
+        <item>здоровье</item>
+        <item>наука</item>
+        <item>спортивный</item>
+        <item>технологии</item>
+    </string-array>
+
 </resources>

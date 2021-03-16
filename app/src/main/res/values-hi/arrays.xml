@@ -12,4 +12,15 @@
         <item>हिन्दी</item>
         <item>русский</item>
     </string-array>
+
+    <string-array name="category_label">
+        <item>आम</item>
+        <item>व्यापार</item>
+        <item>मनोरंजन</item>
+        <item>स्वास्थ्य</item>
+        <item>विज्ञान</item>
+        <item>खेल</item>
+        <item>प्रौद्योगिकी</item>
+    </string-array>
+
 </resources>

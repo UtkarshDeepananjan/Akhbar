@@ -25,16 +25,17 @@ import com.uds.akhbar.utils.NetworkUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeScreenActivity extends AppCompatActivity {
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean(getString(R.string.pref_dark_mode_key), true)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         setContentView(R.layout.activity_home_screen);
         FirebaseHelper firebaseHelper = FirebaseHelper.getInstance();
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -52,15 +53,38 @@ public class HomeScreenActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             NetworkUtils networkUtils = new NetworkUtils(this);
             networkUtils.observe(this, aBoolean -> {
-                if (!aBoolean) {
-                    Snackbar mySnackBar = Snackbar.make(root, "No Internet Connection", Snackbar.LENGTH_SHORT);
+                Snackbar mySnackBar;
+                if (aBoolean) {
+                    if (sharedPreferences.getBoolean(getString(R.string.pref_first_launch), false)) {
+                        mySnackBar = Snackbar.make(root, "Internet Connection Available", Snackbar.LENGTH_SHORT);
+                        mySnackBar.setBackgroundTint(ContextCompat.getColor(this, android.R.color.holo_green_dark));
+                        mySnackBar.setAnchorView(navView);
+                        mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        mySnackBar.show();
+                    }
+                    sharedPreferences.edit().putBoolean("first_launch", true).apply();
+
+                } else {
+                    mySnackBar = Snackbar.make(root, "No Internet Connection", Snackbar.LENGTH_INDEFINITE);
                     mySnackBar.setBackgroundTint(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                     mySnackBar.setAnchorView(navView);
+                    mySnackBar.setTextColor(ContextCompat.getColor(this, R.color.white));
                     mySnackBar.show();
                 }
+
             });
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sharedPreferences.edit().putBoolean("first_launch", false).apply();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPreferences.edit().putBoolean("first_launch", false).apply();
+    }
 }

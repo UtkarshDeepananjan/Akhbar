@@ -14,4 +14,14 @@
         <item>русский</item>
     </string-array>
 
+    <string-array name="category_label">
+        <item>一般的</item>
+        <item>商业</item>
+        <item>娱乐</item>
+        <item>健康</item>
+        <item>科学</item>
+        <item>运动的</item>
+        <item>技术</item>
+    </string-array>
+
 </resources>

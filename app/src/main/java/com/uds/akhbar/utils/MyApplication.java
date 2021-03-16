@@ -15,7 +15,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-       Lingver.init(this, Locale.getDefault().getLanguage());
+        Lingver.init(this, Locale.getDefault().getLanguage());
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

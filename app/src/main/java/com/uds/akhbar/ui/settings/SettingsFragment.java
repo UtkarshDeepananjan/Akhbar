@@ -97,7 +97,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     Intent i = settingsActivity.getBaseContext().getPackageManager().getLaunchIntentForPackage(settingsActivity.getBaseContext().getPackageName());
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
-                    settingsActivity.finish();
+                    settingsActivity.finishAffinity();
                 }
             } else if ((preference instanceof SwitchPreference)) {
                 boolean value = sharedPreferences.getBoolean(preference.getKey(), true);

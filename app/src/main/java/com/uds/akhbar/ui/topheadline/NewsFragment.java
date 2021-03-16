@@ -99,20 +99,11 @@ public class NewsFragment extends Fragment implements ItemClickListener, SharedP
             } else {
                 binding.shimmer.stopShimmer();
                 binding.shimmer.setVisibility(View.GONE);
-                adapter.setArticlesList(articlesList);
                 Toast.makeText(getContext(), newsResponse.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
         binding.refresh.setOnRefreshListener(() -> getLatestHeadlines(getCountryCode()));
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            NetworkUtils networkUtils = new NetworkUtils(getContext());
-            networkUtils.observe(getViewLifecycleOwner(), aBoolean -> {
-                if (!aBoolean) {
-                    binding.shimmer.setVisibility(View.GONE);
-                }
-            });
-        }
 
         return binding.getRoot();
     }
