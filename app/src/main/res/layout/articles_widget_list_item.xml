@@ -31,7 +31,7 @@
             android:gravity="start"
             android:maxLines="3"
             android:padding="4dp"
-            android:textSize="@dimen/list_title_text"
+            android:textSize="@dimen/search_article_title_size"
             android:textStyle="bold"
             tools:text="@tools:sample/lorem/random" />
 

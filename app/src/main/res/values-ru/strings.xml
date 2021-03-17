@@ -19,4 +19,5 @@
     <string name="country_label">Страна</string>
     <string name="internet_available">Доступно подключение к Интернету</string>
     <string name="internet_unavailable">Интернет-соединение недоступно</string>
+    <string name="description_akhbar_logo">Логотип Ахбар</string>
 </resources>

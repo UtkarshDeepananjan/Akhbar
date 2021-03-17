@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
         android:gravity="center"
+        android:textSize="@dimen/article_title_size_large"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/app_name"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="@string/empty_view_text"
             android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:textSize="@dimen/article_title_size_large"
             android:textStyle="bold"
             android:visibility="gone" />
     </FrameLayout>

@@ -38,6 +38,8 @@
     <string name="internet_available">Internet Connection Available</string>
     <string name="internet_unavailable">No Internet Connection</string>
     <string name="description_akhbar_logo">Akhbar Logo</string>
+    <string name="description_google_signin_button" translatable="false">Google SignIn Button</string>
+    <string name="description_facebook_login_button" translatable="false">Facebook Login Button</string>
 
 
     <string-array name="category_value">

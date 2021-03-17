@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.1"
                     android:text="@{article.title}"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/article_title_size_large"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="8dp"
@@ -105,7 +105,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="@{BindingUtils.formatDescription(article.content,article.description)}"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/article_description_size"
                     ads:layout_constraintEnd_toEndOf="@+id/dateTextView"
                     ads:layout_constraintStart_toStartOf="@+id/dateTextView"
                     ads:layout_constraintTop_toBottomOf="@+id/dateTextView"
@@ -120,7 +120,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="@{BindingUtils.formatDateForDetails(article.publishedAt)}"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/article_date_size"
                     android:gravity="end"
                     android:textStyle="italic|bold"
                     ads:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +133,7 @@
         </ScrollView>
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/view_full_article"
             android:layout_width="wrap_content"
             android:layout_height="0dp"

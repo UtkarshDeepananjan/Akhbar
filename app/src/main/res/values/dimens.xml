@@ -10,4 +10,9 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_margin">0dp</dimen>
     <dimen name="list_title_text">14sp</dimen>
     <dimen name="widget_date_text">12sp</dimen>
+    <dimen name="article_title_size">18sp</dimen>
+    <dimen name="article_title_size_large">22sp</dimen>
+    <dimen name="article_description_size">18sp</dimen>
+    <dimen name="article_date_size">18sp</dimen>
+    <dimen name="search_article_title_size">16sp</dimen>
 </resources>
