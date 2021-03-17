@@ -14,7 +14,8 @@
         android:adjustViewBounds="true"
         android:padding="4dp"
         android:scaleType="centerCrop"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        tools:src="@tools:sample/backgrounds/scenic"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             android:gravity="start"
             android:maxLines="3"
             android:padding="4dp"
-            android:textSize="14sp"
+            android:textSize="@dimen/list_title_text"
             android:textStyle="bold"
             tools:text="@tools:sample/lorem/random" />
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:padding="2dp"
-            android:textSize="12sp"
+            android:textSize="@dimen/widget_date_text"
             tools:text="@tools:sample/date/hhmm" />
 
     </LinearLayout>

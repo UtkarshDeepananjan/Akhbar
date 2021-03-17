@@ -11,6 +11,7 @@
         android:id="@+id/app_logo"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/description_akhbar_logo"
         app:layout_constraintBottom_toTopOf="@+id/app_name"
         app:layout_constraintDimensionRatio="H,0.3"
         app:layout_constraintEnd_toEndOf="parent"

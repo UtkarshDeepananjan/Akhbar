@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         release_config {
-            storeFile file('D:\\Projects\\Akhbar\\akhbar.jks')
+            storeFile file('D:\\Projects\\Akhbar')
             storePassword 'uds-akhbar-28'
             keyPassword 'uds-akhbar-28'
             keyAlias 'akhbar-alias'
@@ -69,7 +69,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.3.0"
