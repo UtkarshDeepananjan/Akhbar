@@ -1,4 +1,4 @@
-# Akhbar
+# Akhbar (News App)
 
 ## Udacity Android Developer Nanodegree Capstone Project
 
