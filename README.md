@@ -1,6 +1,6 @@
 # Akhbar
 
-## Udacity Android Developer Nanodegree Capstone project
+## Udacity Android Developer Nanodegree Capstone Project
 
 Akhbar is a news app that selects latest and best news from multiple national and international sources. Presents user with range of news as per their preferences.
 ### Features
@@ -14,7 +14,7 @@ List of main features of your app. For example:
 - Shows news as per Country Preference
       
 ##### NOTE: 
-The app uses [Newsapi] (https://newsapi.org) to fetch news. In order to run the app, create account on newsapi.org and paste your api key in 
+The app uses [Newsapi](https://newsapi.org) to fetch news. In order to run the app, create account on newsapi.org and paste your api key in 
 > ###### Akhbar/gradle.properties --> ApiKey="PASTE_YOUR_API_KEY_HERE"
 
 ## Preview
