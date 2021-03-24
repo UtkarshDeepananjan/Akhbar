@@ -42,7 +42,7 @@ The app uses [Newsapi](https://newsapi.org) to fetch news. In order to run the a
 - [Retrofit2](https://square.github.io/retrofit/) for networking
 - [Archtecture Components](https://developer.android.com/topic/libraries/architecture) (LiveData, ViewModel)
 - [Lingver](https://github.com/YarikSOffice/lingver) for Internationalisation
-- [Timmber](https://github.com/JakeWharton/timber) for debugging/debugging
+- [Timber](https://github.com/JakeWharton/timber) for debugging/debugging
 
 ## License
 Copyright [2021] [Utkarsh Deepanjan]
