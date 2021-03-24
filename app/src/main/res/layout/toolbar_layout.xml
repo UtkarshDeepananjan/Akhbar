@@ -15,7 +15,7 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/title_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title_textView"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="ContentDescription" />
 
